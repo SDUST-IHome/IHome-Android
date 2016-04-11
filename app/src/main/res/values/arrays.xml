@@ -2,10 +2,7 @@
 <resources>
 
     <string-array name="tab_titles">
-        <item>垂直List</item>
-        <item>水平List</item>
-        <item>垂直Grid</item>
-        <item>水平Grid</item>
-        <item>瀑布Staggered</item>
+        <item>&#160;&#160;&#160;&#160;&#160;&#160;状态&#160;&#160;&#160;&#160;&#160;&#160;</item>
+        <item>&#160;&#160;&#160;&#160;&#160;&#160;模式&#160;&#160;&#160;&#160;&#160;&#160;</item>
     </string-array>
 </resources>

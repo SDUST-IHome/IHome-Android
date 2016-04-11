@@ -6,7 +6,7 @@
 -->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/id_coordinatorlayout"
+    android:id="@+id/state_coordinatorlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -19,7 +19,7 @@
                 达到节省屏幕空间，界面动画效果的目的。
     -->
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/id_appbarlayout"
+        android:id="@+id/state_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -45,7 +45,7 @@
             而前面两种模式基本是需要一起使用的，也就是说，这些flag的使用场景，基本已经固定了。
         -->
         <android.support.v7.widget.Toolbar
-            android:id="@+id/id_toolbar"
+            android:id="@+id/state_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -66,7 +66,7 @@
                 app:tabIndicatorColor：Tab指示器下标的颜色；
         -->
         <android.support.design.widget.TabLayout
-            android:id="@+id/id_tablayout"
+            android:id="@+id/state_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="fill"
@@ -81,7 +81,7 @@
         当设置了layout_behavior的控件滑动时，就会触发设置了layout_scrollFlags的控件发生状态的改变。
     -->
     <android.support.v4.view.ViewPager
-        android:id="@+id/id_viewpager"
+        android:id="@+id/state_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -98,7 +98,7 @@
             app:pressedTranslationZ  ：FAB动画效果，在它被按下的时候阴影就会增大。
     -->
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/id_floatingactionbutton"
+        android:id="@+id/state_floatingactionbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

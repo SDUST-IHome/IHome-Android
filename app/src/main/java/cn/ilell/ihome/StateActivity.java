@@ -16,16 +16,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import cn.ilell.ihome.adapter.MyViewPagerAdapter;
-import cn.ilell.ihome.utils.SnackbarUtil;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.ilell.ihome.adapter.MyViewPagerAdapter;
+import cn.ilell.ihome.utils.SnackbarUtil;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 import static android.support.design.widget.TabLayout.OnClickListener;
 
-public class MyActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, OnClickListener {
+public class StateActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, OnClickListener {
 
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout mDrawerLayout;
@@ -47,7 +47,7 @@ public class MyActivity extends AppCompatActivity implements ViewPager.OnPageCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_state);
 
         // 初始化各种控件
         initViews();
@@ -71,7 +71,7 @@ public class MyActivity extends AppCompatActivity implements ViewPager.OnPageCha
         for (int i = 0; i < mTitles.length; i++) {
             Bundle mBundle = new Bundle();
             mBundle.putInt("flag", i);
-            MyFragment mFragment = new MyFragment();
+            StateFragment mFragment = new StateFragment();
             mFragment.setArguments(mBundle);
             mFragments.add(i, mFragment);
         }
@@ -156,14 +156,14 @@ public class MyActivity extends AppCompatActivity implements ViewPager.OnPageCha
     }
 
     private void initViews() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawerlayout);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.id_coordinatorlayout);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.id_appbarlayout);
-        mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.id_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.id_floatingactionbutton);
-        mNavigationView = (NavigationView) findViewById(R.id.id_navigationview);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.state_drawerlayout);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.state_coordinatorlayout);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.state_appbarlayout);
+        mToolbar = (Toolbar) findViewById(R.id.state_toolbar);
+        mTabLayout = (TabLayout) findViewById(R.id.state_tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.state_viewpager);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.state_floatingactionbutton);
+        mNavigationView = (NavigationView) findViewById(R.id.state_navigationview);
     }
 
 
@@ -203,7 +203,7 @@ public class MyActivity extends AppCompatActivity implements ViewPager.OnPageCha
     public void onClick(View v) {
         switch (v.getId()) {
             // FloatingActionButton的点击事件
-            case R.id.id_floatingactionbutton:
+            case R.id.state_floatingactionbutton:
                 SnackbarUtil.show(v, getString(R.string.plusone), 0);
                 break;
         }

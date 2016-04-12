@@ -1,5 +1,6 @@
 package cn.ilell.ihome;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -148,6 +149,24 @@ public class StateActivity extends AppCompatActivity implements ViewPager.OnPage
                         break;
                     case R.id.nav_menu_categories:
                         msgString = (String) menuItem.getTitle();
+                        new Thread() {
+                            public void run() {
+                                //休眠0.5
+                                try {
+                                    Thread.sleep(256);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Intent intent = new Intent();
+                                //制定intent要启动的类
+                                intent.setClass(StateActivity.this, ControlActivity.class);
+                                //启动一个新的Activity
+                                startActivity(intent);
+                                //关闭当前的
+                                StateActivity.this.finish();
+                                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                            };
+                        }.start();
                         break;
                     case R.id.nav_menu_feedback:
                         msgString = (String) menuItem.getTitle();
@@ -162,7 +181,7 @@ public class StateActivity extends AppCompatActivity implements ViewPager.OnPage
                 mDrawerLayout.closeDrawers();
 
                 // android-support-design兼容包中新添加的一个类似Toast的控件。
-                SnackbarUtil.show(mViewPager, msgString, 0);
+                //SnackbarUtil.show(mViewPager, msgString, 0);
 
                 return true;
             }

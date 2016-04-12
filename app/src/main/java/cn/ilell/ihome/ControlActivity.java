@@ -1,5 +1,6 @@
 package cn.ilell.ihome;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -49,7 +50,7 @@ public class ControlActivity extends AppCompatActivity implements ViewPager.OnPa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_state);
+        setContentView(R.layout.activity_control);
 
         // 初始化各种控件
         initViews();
@@ -145,6 +146,24 @@ public class ControlActivity extends AppCompatActivity implements ViewPager.OnPa
                 switch (menuItem.getItemId()) {
                     case R.id.nav_menu_home:
                         msgString = (String) menuItem.getTitle();
+                        new Thread() {
+                            public void run() {
+                                //休眠0.5
+                                try {
+                                    Thread.sleep(256);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Intent intent = new Intent();
+                                //制定intent要启动的类
+                                intent.setClass(ControlActivity.this,StateActivity.class);
+                                //启动一个新的Activity
+                                startActivity(intent);
+                                //关闭当前的
+                                ControlActivity.this.finish();
+                                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                            };
+                        }.start();
                         break;
                     case R.id.nav_menu_categories:
                         msgString = (String) menuItem.getTitle();
@@ -170,14 +189,14 @@ public class ControlActivity extends AppCompatActivity implements ViewPager.OnPa
     }
 
     private void initViews() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.state_drawerlayout);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.state_coordinatorlayout);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.state_appbarlayout);
-        mToolbar = (Toolbar) findViewById(R.id.state_toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.state_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.state_viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.state_floatingactionbutton);
-        mNavigationView = (NavigationView) findViewById(R.id.state_navigationview);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.control_drawerlayout);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.control_coordinatorlayout);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.control_appbarlayout);
+        mToolbar = (Toolbar) findViewById(R.id.control_toolbar);
+        mTabLayout = (TabLayout) findViewById(R.id.control_tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.control_viewpager);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.control_floatingactionbutton);
+        mNavigationView = (NavigationView) findViewById(R.id.control_navigationview);
     }
 
 
@@ -217,7 +236,7 @@ public class ControlActivity extends AppCompatActivity implements ViewPager.OnPa
     public void onClick(View v) {
         switch (v.getId()) {
             // FloatingActionButton的点击事件
-            case R.id.state_floatingactionbutton:
+            case R.id.control_floatingactionbutton:
                 SnackbarUtil.show(v, getString(R.string.plusone), 0);
                 break;
 

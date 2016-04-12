@@ -27,7 +27,7 @@ import cn.ilell.ihome.utils.SnackbarUtil;
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 import static android.support.design.widget.TabLayout.OnClickListener;
 
-public class StateActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, OnClickListener {
+public class ControlActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, OnClickListener {
 
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout mDrawerLayout;

@@ -1,4 +1,4 @@
-package cn.ilell.ihome;
+package cn.ilell.ihome.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import cn.ilell.ihome.R;
 import cn.ilell.ihome.adapter.MyRecyclerViewAdapter;
 import cn.ilell.ihome.adapter.MyStaggeredViewAdapter;
 
 /**
  * Created by Monkey on 2015/6/29.
  */
-public class StateFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
+public class ModeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
         MyRecyclerViewAdapter.OnItemClickListener, MyStaggeredViewAdapter.OnItemClickListener,
         View.OnClickListener{
 
@@ -30,7 +31,7 @@ public class StateFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.frag_state, container, false);
+        mView = inflater.inflate(R.layout.frag_mode, container, false);
         return mView;
     }
 
@@ -38,7 +39,7 @@ public class StateFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.state_swiperefreshlayout);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.mode_swiperefreshlayout);
 
 
         // 刷新时，指示器旋转后变化的颜色
@@ -50,8 +51,8 @@ public class StateFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     private void initView() {
-        btn = (Button) mView.findViewById(R.id.state_button);
-        text = (TextView) mView.findViewById(R.id.state_textView);
+        btn = (Button) mView.findViewById(R.id.mode_button);
+        text = (TextView) mView.findViewById(R.id.mode_textView);
     }
 
     private void setListener() {
@@ -96,10 +97,10 @@ public class StateFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.state_button:
+            case R.id.mode_button:
 
                 //do something
-                text.setText("123");
+                text.setText("456");
                 break;
 
            /* case R.id. myButton2:

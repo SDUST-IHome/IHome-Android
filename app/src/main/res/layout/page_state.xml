@@ -7,13 +7,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
-        android:id="@+id/button"
+        android:id="@+id/state_button"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/textView"
+        android:id="@+id/state_textView"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

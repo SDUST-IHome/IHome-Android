@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,7 +207,11 @@ public class StateActivity extends AppCompatActivity implements ViewPager.OnPage
             // FloatingActionButton的点击事件
             case R.id.state_floatingactionbutton:
                 SnackbarUtil.show(v, getString(R.string.plusone), 0);
+                Toast.makeText(StateActivity.this, "132", Toast.LENGTH_SHORT).show();
+                TextView textView = (TextView) findViewById(R.id.state_textView);
+                textView.setText("fafafa");
                 break;
+
         }
     }
 }

@@ -7,45 +7,24 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
+import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.ModeFragment;
 import cn.ilell.ihome.fragment.StateFragment;
 import cn.ilell.ihome.utils.SnackbarUtil;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
-import static android.support.design.widget.TabLayout.OnClickListener;
 
-public class StateActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, OnClickListener {
-
-    //初始化各种控件，照着xml中的顺序写
-    private DrawerLayout mDrawerLayout;
-    private CoordinatorLayout mCoordinatorLayout;
-    private AppBarLayout mAppBarLayout;
-    private Toolbar mToolbar;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private FloatingActionButton mFloatingActionButton;
-    private NavigationView mNavigationView;
-
-    // TabLayout中的tab标题
-    private String[] mTitles;
-    // 填充到ViewPager中的Fragment
-    private List<Fragment> mFragments;
-    // ViewPager的数据适配器
-    private MyViewPagerAdapter mViewPagerAdapter;
+public class StateActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,25 +127,7 @@ public class StateActivity extends AppCompatActivity implements ViewPager.OnPage
                         msgString = (String) menuItem.getTitle();
                         break;
                     case R.id.nav_menu_categories:
-                        msgString = (String) menuItem.getTitle();
-                        new Thread() {
-                            public void run() {
-                                //休眠0.5
-                                try {
-                                    Thread.sleep(256);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                Intent intent = new Intent();
-                                //制定intent要启动的类
-                                intent.setClass(StateActivity.this, ControlActivity.class);
-                                //启动一个新的Activity
-                                startActivity(intent);
-                                //关闭当前的
-                                StateActivity.this.finish();
-                                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                            };
-                        }.start();
+                        changeActivity(ControlActivity.class);
                         break;
                     case R.id.nav_menu_feedback:
                         msgString = (String) menuItem.getTitle();
@@ -188,6 +149,27 @@ public class StateActivity extends AppCompatActivity implements ViewPager.OnPage
         });
     }
 
+    private void changeActivity(final Class mCalss) {
+        new Thread() {
+            public void run() {
+                //休眠0.256
+                try {
+                    Thread.sleep(256);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent();
+                //制定intent要启动的类
+                intent.setClass(StateActivity.this, mCalss);
+                //启动一个新的Activity
+                startActivity(intent);
+                //关闭当前的
+                StateActivity.this.finish();
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            };
+        }.start();
+    }
+
     private void initViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.state_drawerlayout);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.state_coordinatorlayout);
@@ -197,39 +179,6 @@ public class StateActivity extends AppCompatActivity implements ViewPager.OnPage
         mViewPager = (ViewPager) findViewById(R.id.state_viewpager);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.state_floatingactionbutton);
         mNavigationView = (NavigationView) findViewById(R.id.state_navigationview);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_my, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        mToolbar.setTitle(mTitles[position]);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     @Override

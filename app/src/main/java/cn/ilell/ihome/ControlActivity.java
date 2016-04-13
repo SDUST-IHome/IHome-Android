@@ -134,12 +134,13 @@ public class ControlActivity extends BaseActivity {
                         break;
                     case R.id.nav_menu_control:
                         msgString = (String) menuItem.getTitle();
+                        SnackbarUtil.show(mViewPager, msgString, 0);
                         break;
                     case R.id.nav_menu_history:
-                        msgString = (String) menuItem.getTitle();
+                        changeActivity(HistoryActivity.class);
                         break;
                     case R.id.nav_menu_monitor:
-                        msgString = (String) menuItem.getTitle();
+                        changeActivity(MonitorActivity.class);
                         break;
                 }
 

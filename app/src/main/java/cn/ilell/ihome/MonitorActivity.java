@@ -18,18 +18,18 @@ import java.util.ArrayList;
 
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.base.BaseActivity;
-import cn.ilell.ihome.fragment.ModeFragment;
-import cn.ilell.ihome.fragment.StateFragment;
+import cn.ilell.ihome.fragment.KitchenFragment;
+import cn.ilell.ihome.fragment.ParlorFragment;
 import cn.ilell.ihome.utils.SnackbarUtil;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
-public class StateActivity extends BaseActivity {
+public class MonitorActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_state);
+        setContentView(R.layout.activity_monitor);
 
         // 初始化各种控件
         initViews();
@@ -46,29 +46,33 @@ public class StateActivity extends BaseActivity {
     private void initData() {
 
         // Tab的标题采用string-array的方法保存，在res/values/arrays.xml中写
-        mTitles = getResources().getStringArray(R.array.state_tab_titles);
+        mTitles = getResources().getStringArray(R.array.monitor_tab_titles);
 
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
-        Bundle stateBundle = new Bundle();
-        stateBundle.putInt("flag", 0);
-        StateFragment stateFragment = new StateFragment();
-        stateFragment.setArguments(stateBundle);
-        mFragments.add(0, stateFragment);
-        Bundle modeBundle = new Bundle();
-        modeBundle.putInt("flag", 1);
-        ModeFragment modeFragment = new ModeFragment();
-        modeFragment.setArguments(modeBundle);
-        mFragments.add(1, modeFragment);
+        Bundle parlorBundle = new Bundle();
+        parlorBundle.putInt("flag", 0);
+        ParlorFragment parlorFragment = new ParlorFragment();
+        parlorFragment.setArguments(parlorBundle);
+        mFragments.add(0, parlorFragment);
 
+        Bundle kitchenBundle = new Bundle();
+        kitchenBundle.putInt("flag", 1);
+        KitchenFragment kitchenFragment = new KitchenFragment();
+        kitchenFragment.setArguments(kitchenBundle);
+        mFragments.add(1, kitchenFragment);
+/*
+        Bundle toiletBundle = new Bundle();
+        toiletBundle.putInt("flag", 2);
+        ToiletFragment toiletFragment = new ToiletFragment();
+        toiletFragment.setArguments(toiletBundle);
+        mFragments.add(2, toiletFragment);
 
-        /*for (int i = 0; i < mTitles.length; i++) {
-            Bundle mBundle = new Bundle();
-            mBundle.putInt("flag", i);
-            StateFragment mFragment = new StateFragment();
-            mFragment.setArguments(mBundle);
-            mFragments.add(i, mFragment);
-        }*/
+        Bundle bedroomBundle = new Bundle();
+        bedroomBundle.putInt("flag", 3);
+        BedroomFragment bedroomFragment = new BedroomFragment();
+        bedroomFragment.setArguments(bedroomBundle);
+        mFragments.add(3, bedroomFragment);*/
 
     }
 
@@ -124,8 +128,7 @@ public class StateActivity extends BaseActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_menu_state:
-                        msgString = (String) menuItem.getTitle();
-                        SnackbarUtil.show(mViewPager, msgString, 0);
+                        changeActivity(StateActivity.class);
                         break;
                     case R.id.nav_menu_control:
                         changeActivity(ControlActivity.class);
@@ -134,7 +137,8 @@ public class StateActivity extends BaseActivity {
                         changeActivity(HistoryActivity.class);
                         break;
                     case R.id.nav_menu_monitor:
-                        changeActivity(MonitorActivity.class);
+                        msgString = (String) menuItem.getTitle();
+                        SnackbarUtil.show(mViewPager, msgString, 0);
                         break;
                 }
 
@@ -150,7 +154,7 @@ public class StateActivity extends BaseActivity {
         });
     }
 
-    private void changeActivity(final Class mCalss) {
+    private void changeActivity(final Class mClass) {
         new Thread() {
             public void run() {
                 //休眠0.256
@@ -161,32 +165,33 @@ public class StateActivity extends BaseActivity {
                 }
                 Intent intent = new Intent();
                 //制定intent要启动的类
-                intent.setClass(StateActivity.this, mCalss);
+                intent.setClass(MonitorActivity.this,mClass);
                 //启动一个新的Activity
                 startActivity(intent);
                 //关闭当前的
-                StateActivity.this.finish();
+                MonitorActivity.this.finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             };
         }.start();
     }
 
     private void initViews() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.state_drawerlayout);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.state_coordinatorlayout);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.state_appbarlayout);
-        mToolbar = (Toolbar) findViewById(R.id.state_toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.state_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.state_viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.state_floatingactionbutton);
-        mNavigationView = (NavigationView) findViewById(R.id.state_navigationview);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.monitor_drawerlayout);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.monitor_coordinatorlayout);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.monitor_appbarlayout);
+        mToolbar = (Toolbar) findViewById(R.id.monitor_toolbar);
+        mTabLayout = (TabLayout) findViewById(R.id.monitor_tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.monitor_viewpager);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.monitor_floatingactionbutton);
+        mNavigationView = (NavigationView) findViewById(R.id.monitor_navigationview);
     }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             // FloatingActionButton的点击事件
-            case R.id.state_floatingactionbutton:
+            case R.id.monitor_floatingactionbutton:
                 SnackbarUtil.show(v, getString(R.string.plusone), 0);
                 break;
 

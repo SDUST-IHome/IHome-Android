@@ -1,9 +1,7 @@
 package cn.ilell.ihome.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import cn.ilell.ihome.R;
-import cn.ilell.ihome.adapter.MyRecyclerViewAdapter;
-import cn.ilell.ihome.adapter.MyStaggeredViewAdapter;
+import cn.ilell.ihome.base.BaseFragment;
 
 /**
  * Created by Monkey on 2015/6/29.
  */
-public class ModeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
-        MyRecyclerViewAdapter.OnItemClickListener, MyStaggeredViewAdapter.OnItemClickListener,
-        View.OnClickListener{
-
-    private View mView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+public class ModeFragment extends BaseFragment{
 
     private Button btn;
     private TextView text;
@@ -56,41 +48,7 @@ public class ModeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void setListener() {
-        /*Button btn1 = (Button) mView.findViewById(R.id.state_button);
-        btn1 .setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-
-                //do something
-                text.setText("456");
-
-            }
-
-        });*/
         btn.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onRefresh() {
-
-        // 刷新时模拟数据的变化
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 1000);
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        //SnackbarUtil.show(mRecyclerView, getString(R.string.item_clicked), 0);
-    }
-
-    @Override
-    public void onItemLongClick(View view, int position) {
-        //SnackbarUtil.show(mRecyclerView, getString(R.string.item_longclicked), 0);
     }
 
     @Override

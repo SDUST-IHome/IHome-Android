@@ -46,7 +46,7 @@ public class StateActivity extends BaseActivity {
     private void initData() {
 
         // Tab的标题采用string-array的方法保存，在res/values/arrays.xml中写
-        mTitles = getResources().getStringArray(R.array.tab_titles);
+        mTitles = getResources().getStringArray(R.array.state_tab_titles);
 
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
@@ -123,16 +123,16 @@ public class StateActivity extends BaseActivity {
                 String msgString = "";
 
                 switch (menuItem.getItemId()) {
-                    case R.id.nav_menu_home:
+                    case R.id.nav_menu_state:
                         msgString = (String) menuItem.getTitle();
                         break;
-                    case R.id.nav_menu_categories:
+                    case R.id.nav_menu_control:
                         changeActivity(ControlActivity.class);
                         break;
-                    case R.id.nav_menu_feedback:
+                    case R.id.nav_menu_history:
                         msgString = (String) menuItem.getTitle();
                         break;
-                    case R.id.nav_menu_setting:
+                    case R.id.nav_menu_monitor:
                         msgString = (String) menuItem.getTitle();
                         break;
                 }

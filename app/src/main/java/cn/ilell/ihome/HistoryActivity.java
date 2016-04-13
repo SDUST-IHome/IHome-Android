@@ -18,8 +18,9 @@ import java.util.ArrayList;
 
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.base.BaseActivity;
-import cn.ilell.ihome.fragment.KitchenFragment;
-import cn.ilell.ihome.fragment.ParlorFragment;
+import cn.ilell.ihome.fragment.BrightFragment;
+import cn.ilell.ihome.fragment.HumidFragment;
+import cn.ilell.ihome.fragment.TempFragment;
 import cn.ilell.ihome.utils.SnackbarUtil;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
@@ -50,24 +51,25 @@ public class HistoryActivity extends BaseActivity {
 
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
-        Bundle parlorBundle = new Bundle();
-        parlorBundle.putInt("flag", 0);
-        ParlorFragment parlorFragment = new ParlorFragment();
-        parlorFragment.setArguments(parlorBundle);
-        mFragments.add(0, parlorFragment);
 
-        Bundle kitchenBundle = new Bundle();
-        kitchenBundle.putInt("flag", 1);
-        KitchenFragment kitchenFragment = new KitchenFragment();
-        kitchenFragment.setArguments(kitchenBundle);
-        mFragments.add(1, kitchenFragment);
+        Bundle tempBundle = new Bundle();
+        tempBundle.putInt("flag", 0);
+        TempFragment tempFragment = new TempFragment();
+        tempFragment.setArguments(tempBundle);
+        mFragments.add(0, tempFragment);
+
+        Bundle humidBundle = new Bundle();
+        humidBundle.putInt("flag", 1);
+        HumidFragment humidFragment = new HumidFragment();
+        humidFragment.setArguments(humidBundle);
+        mFragments.add(1, humidFragment);
+
+        Bundle brightBundle = new Bundle();
+        brightBundle.putInt("flag", 2);
+        BrightFragment brightFragment = new BrightFragment();
+        brightFragment.setArguments(brightBundle);
+        mFragments.add(2, brightFragment);
 /*
-        Bundle toiletBundle = new Bundle();
-        toiletBundle.putInt("flag", 2);
-        ToiletFragment toiletFragment = new ToiletFragment();
-        toiletFragment.setArguments(toiletBundle);
-        mFragments.add(2, toiletFragment);
-
         Bundle bedroomBundle = new Bundle();
         bedroomBundle.putInt("flag", 3);
         BedroomFragment bedroomFragment = new BedroomFragment();

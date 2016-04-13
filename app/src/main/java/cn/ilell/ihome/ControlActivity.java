@@ -18,8 +18,10 @@ import java.util.ArrayList;
 
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.base.BaseActivity;
-import cn.ilell.ihome.fragment.ModeFragment;
-import cn.ilell.ihome.fragment.StateFragment;
+import cn.ilell.ihome.fragment.BedroomFragment;
+import cn.ilell.ihome.fragment.KitchenFragment;
+import cn.ilell.ihome.fragment.ParlorFragment;
+import cn.ilell.ihome.fragment.ToiletFragment;
 import cn.ilell.ihome.utils.SnackbarUtil;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
@@ -50,26 +52,29 @@ public class ControlActivity extends BaseActivity {
 
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
-        Bundle stateBundle = new Bundle();
-        stateBundle.putInt("flag", 0);
-        StateFragment stateFragment = new StateFragment();
-        stateFragment.setArguments(stateBundle);
-        mFragments.add(0, stateFragment);
+        Bundle parlorBundle = new Bundle();
+        parlorBundle.putInt("flag", 0);
+        ParlorFragment parlorFragment = new ParlorFragment();
+        parlorFragment.setArguments(parlorBundle);
+        mFragments.add(0, parlorFragment);
 
-        Bundle modeBundle = new Bundle();
-        modeBundle.putInt("flag", 1);
-        ModeFragment modeFragment = new ModeFragment();
-        modeFragment.setArguments(modeBundle);
-        mFragments.add(1, modeFragment);
+        Bundle kitchenBundle = new Bundle();
+        kitchenBundle.putInt("flag", 1);
+        KitchenFragment kitchenFragment = new KitchenFragment();
+        kitchenFragment.setArguments(kitchenBundle);
+        mFragments.add(1, kitchenFragment);
 
+        Bundle toiletBundle = new Bundle();
+        toiletBundle.putInt("flag", 2);
+        ToiletFragment toiletFragment = new ToiletFragment();
+        toiletFragment.setArguments(toiletBundle);
+        mFragments.add(2, toiletFragment);
 
-        /*for (int i = 0; i < mTitles.length; i++) {
-            Bundle mBundle = new Bundle();
-            mBundle.putInt("flag", i);
-            StateFragment mFragment = new StateFragment();
-            mFragment.setArguments(mBundle);
-            mFragments.add(i, mFragment);
-        }*/
+        Bundle bedroomBundle = new Bundle();
+        bedroomBundle.putInt("flag", 3);
+        BedroomFragment bedroomFragment = new BedroomFragment();
+        bedroomFragment.setArguments(bedroomBundle);
+        mFragments.add(3, bedroomFragment);
 
     }
 
@@ -143,7 +148,7 @@ public class ControlActivity extends BaseActivity {
                 mDrawerLayout.closeDrawers();
 
                 // android-support-design兼容包中新添加的一个类似Toast的控件。
-                SnackbarUtil.show(mViewPager, msgString, 0);
+                //SnackbarUtil.show(mViewPager, msgString, 0);
 
                 return true;
             }

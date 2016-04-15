@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="5">
+
+    <cn.ilell.ihome.view.MjpegView
+        android:id="@+id/outdoor_mjpegview"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/outdoor_button"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="outdoor"
-        android:id="@+id/outdoor_textView"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="打开对话"
+        android:id="@+id/oudoor_btn_connect"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

@@ -6,6 +6,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ public class TempFragment extends BaseFragment{
 
     private Button btn;
     private TextView text;
+    private WebView web;
 
     @Nullable
     @Override
@@ -45,6 +48,9 @@ public class TempFragment extends BaseFragment{
     private void initView() {
         btn = (Button) mView.findViewById(R.id.temp_button);
         text = (TextView) mView.findViewById(R.id.temp_textView);
+        web = (WebView) mView.findViewById(R.id.temp_webView);
+        WebSettings settings = web.getSettings();
+        settings.setJavaScriptEnabled(true);
     }
 
     private void setListener() {
@@ -59,6 +65,7 @@ public class TempFragment extends BaseFragment{
 
                 //do something
                 text.setText("123");
+                web.loadUrl("http://115.159.127.79/dateanalyze.php");
                 break;
 
            /* case R.id. myButton2:

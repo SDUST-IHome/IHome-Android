@@ -35,7 +35,8 @@ public class OutdoorFragment extends BaseFragment{
     private MjpegView mjpegView = null;
     private AudioClient audioClient = null;
 
-    private String ip = "192.168.0.106";
+    private String wrt_ip = "192.168.0.116";
+    private String ser_ip = "115.159.23.237/proxy";
     private String mjpeg_port = "8080";
     private int audio_port = 8081;
     @Nullable
@@ -104,16 +105,7 @@ public class OutdoorFragment extends BaseFragment{
         switch (v.getId()) {
 
             case R.id.oudoor_btn_connect:
-                String action = "http://" + ip + ":"+ mjpeg_port + "/?action=stream";
-                //is = http(action);
-                //MjpegInputStream.initInstance(is);
-                //mis = MjpegInputStream.getInstance();
-                audioClient = new AudioClient();
-                audioClient.startAudioClient(ip, audio_port);
-                new ConnectTask().execute(ip);
-                //initMjpegView();
-                //do something
-                //text.setText("123");
+                new ConnectTask().execute(wrt_ip);
                 break;
 
            /* case R.id. myButton2:
@@ -143,14 +135,21 @@ public class OutdoorFragment extends BaseFragment{
 
         @Override
         protected String doInBackground(String... params) {
-                    /**
-                     * 在浏览器观察画面时,也是输入下面的字符串网址
-                     */
-                    String action = "http://" + ip + ":"+ mjpeg_port + "/?action=stream";
-                    is = http(action);
-                    if (is != null) { /*第一次必须输入IP，下次登录时才可找到之前登录成功后的IP*/
-                        MjpegInputStream.initInstance(is);
-                    }
+            audioClient = new AudioClient();
+            audioClient.startAudioClient(wrt_ip, audio_port);
+            /**
+             * 在浏览器观察画面时,也是输入下面的字符串网址
+             */
+            String action = "http://" + wrt_ip + ":"+ mjpeg_port + "/?action=stream";
+            is = http(action);
+            if (is == null) {   //如果内网连接不上外网连接
+                action = "http://" + ser_ip + "/?action=stream";
+                //Toast.makeText(mContext, action, Toast.LENGTH_SHORT).show();
+                is = http(action);
+            }
+            if (is != null) {   //初始化jpeg流
+                MjpegInputStream.initInstance(is);
+            }
             return null;
         }
 

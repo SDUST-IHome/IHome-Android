@@ -19,7 +19,7 @@ import java.net.UnknownHostException;
 @SuppressLint
 ({ "NewApi", "HandlerLeak" })
 public class AudioClient {
-	 private String IP = "192.168.0.102";  //static final 
+	 private String IP = "192.168.0.102";  //static final
 	 private int port = 8081;
 	 private Socket s;
 	 private OutputStream out = null;

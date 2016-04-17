@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -71,10 +72,11 @@ public class StateActivity extends BaseActivity {
 
             //注册回调接口来接收下载进度的变化
             msgService.setOnProgressListener(new OnProgressListener() {
-
                 @Override
                 public void onProgress(String recvMsg) {
                     SnackbarUtil.show(findViewById(R.id.state_button), recvMsg, 0);
+                    TextView textView = (TextView) findViewById(R.id.state_textView);
+                    textView.setText(recvMsg);
                 }
             });
 
@@ -103,16 +105,6 @@ public class StateActivity extends BaseActivity {
         ModeFragment modeFragment = new ModeFragment();
         modeFragment.setArguments(modeBundle);
         mFragments.add(1, modeFragment);
-
-
-        /*for (int i = 0; i < mTitles.length; i++) {
-            Bundle mBundle = new Bundle();
-            mBundle.putInt("flag", i);
-            StateFragment mFragment = new StateFragment();
-            mFragment.setArguments(mBundle);
-            mFragments.add(i, mFragment);
-        }*/
-
     }
 
     private void configViews() {

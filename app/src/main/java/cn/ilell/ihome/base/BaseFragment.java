@@ -1,5 +1,6 @@
 package cn.ilell.ihome.base;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -14,6 +15,7 @@ public class BaseFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         MyRecyclerViewAdapter.OnItemClickListener, MyStaggeredViewAdapter.OnItemClickListener,
         View.OnClickListener {
     protected View mView;
+    protected Context mContext;
     protected SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override

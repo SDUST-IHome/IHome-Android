@@ -17,6 +17,7 @@ import cn.ilell.ihome.base.BaseFragment;
  */
 public class StateFragment extends BaseFragment{
 
+
     private Button btn;
     private TextView text;
 
@@ -59,6 +60,7 @@ public class StateFragment extends BaseFragment{
 
                 //do something
                 text.setText("123");
+
                 break;
 
            /* case R.id. myButton2:

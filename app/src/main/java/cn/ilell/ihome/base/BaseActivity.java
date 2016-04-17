@@ -18,11 +18,15 @@ import java.util.List;
 
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
+import cn.ilell.ihome.service.MsgService;
 
 /**
  * Created by lhc35 on 2016/4/13.
  */
 public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+    //服务
+    protected MsgService msgService;
+
     //初始化各种控件，照着xml中的顺序写
     protected DrawerLayout mDrawerLayout;
     protected CoordinatorLayout mCoordinatorLayout;

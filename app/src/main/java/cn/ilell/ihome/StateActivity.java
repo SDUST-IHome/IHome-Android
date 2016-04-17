@@ -1,7 +1,10 @@
 package cn.ilell.ihome;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +23,8 @@ import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.ModeFragment;
 import cn.ilell.ihome.fragment.StateFragment;
+import cn.ilell.ihome.service.MsgService;
+import cn.ilell.ihome.service.OnProgressListener;
 import cn.ilell.ihome.utils.SnackbarUtil;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
@@ -41,6 +46,44 @@ public class StateActivity extends BaseActivity {
         // 对各种控件进行设置、适配、填充数据
         configViews();
 
+        bindMsgService();
+    }
+
+    protected void bindMsgService() {
+        //绑定Service
+        Intent intent = new Intent();
+        intent.setAction("cn.msgservice");
+        intent.setPackage(getPackageName());
+        bindService(intent, conn, BIND_AUTO_CREATE);
+    }
+
+
+    ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            //返回一个MsgService对象
+            msgService = ((MsgService.MsgBinder)service).getService();
+
+            //注册回调接口来接收下载进度的变化
+            msgService.setOnProgressListener(new OnProgressListener() {
+
+                @Override
+                public void onProgress(int progress) {
+                    SnackbarUtil.show(findViewById(R.id.state_button), progress+"", 0);
+                }
+            });
+
+        }
+    };
+    @Override
+    public void onDestroy() {
+        unbindService(conn);
+        super.onDestroy();
     }
 
     private void initData() {
@@ -126,6 +169,8 @@ public class StateActivity extends BaseActivity {
                     case R.id.nav_menu_state:
                         msgString = (String) menuItem.getTitle();
                         SnackbarUtil.show(mViewPager, msgString, 0);
+                        //开始下载
+                        msgService.startDownLoad();
                         break;
                     case R.id.nav_menu_control:
                         changeActivity(ControlActivity.class);

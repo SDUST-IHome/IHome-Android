@@ -73,8 +73,8 @@ public class StateActivity extends BaseActivity {
             msgService.setOnProgressListener(new OnProgressListener() {
 
                 @Override
-                public void onProgress(int progress) {
-                    SnackbarUtil.show(findViewById(R.id.state_button), progress+"", 0);
+                public void onProgress(String recvMsg) {
+                    SnackbarUtil.show(findViewById(R.id.state_button), recvMsg, 0);
                 }
             });
 
@@ -170,7 +170,7 @@ public class StateActivity extends BaseActivity {
                         msgString = (String) menuItem.getTitle();
                         SnackbarUtil.show(mViewPager, msgString, 0);
                         //开始下载
-                        msgService.startDownLoad();
+                        msgService.connectServer();
                         break;
                     case R.id.nav_menu_control:
                         changeActivity(ControlActivity.class);

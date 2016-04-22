@@ -9,8 +9,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.Socket;
 
 import cn.ilell.ihome.R;
@@ -21,10 +21,10 @@ import cn.ilell.ihome.StateActivity;
  */
 public class MyService extends Service {
     protected String serverIP = "115.159.127.79";  //static final
-    protected int serverPort = 65510;
+    protected int serverPort = 5678;
     protected Socket serviceSocket;
-    protected PrintWriter socketOut = null;
-    protected BufferedReader socketIn = null;
+    protected DataOutputStream socketOut = null;
+    protected DataInputStream socketIn = null;
     protected String recvMsg;
     protected String sendMsg;
     /** Notification构造器 */

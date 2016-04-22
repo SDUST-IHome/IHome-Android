@@ -6,6 +6,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class StateFragment extends BaseFragment{
 
     private Button btn;
     private TextView text;
+    private WebView web;
 
     @Nullable
     @Override
@@ -46,6 +49,9 @@ public class StateFragment extends BaseFragment{
     private void initView() {
         btn = (Button) mView.findViewById(R.id.state_button);
         text = (TextView) mView.findViewById(R.id.state_textView);
+        web = (WebView) mView.findViewById(R.id.state_webView);
+        WebSettings settings = web.getSettings();
+        settings.setJavaScriptEnabled(true);
     }
 
     private void setListener() {
@@ -60,7 +66,7 @@ public class StateFragment extends BaseFragment{
 
                 //do something
                 text.setText("123");
-
+                web.loadUrl("http://115.159.127.79/");
                 break;
 
            /* case R.id. myButton2:

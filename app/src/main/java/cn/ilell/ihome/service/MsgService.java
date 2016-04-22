@@ -7,12 +7,9 @@ import android.os.IBinder;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -51,8 +48,8 @@ public class MsgService extends MyService {
         try {
             serviceSocket = new Socket(serverIP,serverPort);
 
-            socketIn = new BufferedReader(new InputStreamReader(serviceSocket.getInputStream(), "GBK"));
-            socketOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(serviceSocket.getOutputStream(), "GBK")), true);
+            socketIn = new DataInputStream(serviceSocket.getInputStream());
+            socketOut = new DataOutputStream(serviceSocket.getOutputStream());
             sendMsg("Phone");
             Thread mThread = new Thread(mRunable);
             mThread.start();
@@ -64,8 +61,13 @@ public class MsgService extends MyService {
     }
 
     public void sendMsg(String str) {
-        socketOut.write(str);
-        socketOut.flush();
+        try {
+            socketOut.write(str.getBytes());
+            socketOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private Runnable mRunable = new Runnable() {
@@ -73,13 +75,9 @@ public class MsgService extends MyService {
         public void run() {
             while (true) {
                 try {
-                    char[] temp = new char[1024];
-                    if (socketIn.read(temp) != 0) {
-                        recvMsg = new String(temp);
+                        recvMsg = socketIn.readUTF();
                         mHandler.sendMessage(mHandler.obtainMessage());
-                    }
-                }
-                catch (IOException e){
+                    } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -89,27 +87,21 @@ public class MsgService extends MyService {
     Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
-            String[] data = recvMsg.split("|");
-            switch (data[0]) {
-                case "2":   //报警
-                    showCzNotify(data[1],data[2]);
-                    break;
-                case "1":   //提醒
-                    showIntentActivityNotify(data[1],data[2]);
-                    break;
-                case "0":   //非提示性指令
-                    if (data[1].equals("0")) {  //关闭操作
-                        if (data[2].equals("2")) {  //取消报警
-                            mNotificationManager.cancel(notifyId_WARNING);//删除一个特定的通知ID对应的通知
-                        }
-                        else if (data[2].equals("1")) { //取消消息提醒
-                            mNotificationManager.cancel(notifyId_MESSAGE);//删除一个特定的通知ID对应的通知
-                        }
+            String[] data = recvMsg.split("/");
+            if (data[0].equals("0")) {    //网关消息
+                if (data[1].equals("4")) {  //火警
+                    if (data[2].equals("0")) {  //取消火警
+                        mNotificationManager.cancel(notifyId_WARNING);//删除一个特定的通知ID对应的通知
                     }
-                    else if (data[1].equals("1")) { //打开操作
-
+                    else if (data[2].equals("1")) { //火警提醒
+                        showCzNotify("火灾警报","传感器检测到您的家中存在较高浓度的有害气体");
                     }
-                    break;
+                }
+            }
+            else if (data[0].equals("1")) {   //用户消息
+                if (data[1].equals("2")) {  //家庭留言更新
+                    showIntentActivityNotify("您有新的家庭留言",data[2]);
+                }
             }
             onProgressListener.onProgress(recvMsg);    //将消息传到前端
         };

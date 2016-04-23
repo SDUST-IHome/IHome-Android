@@ -105,7 +105,9 @@ public class OutdoorFragment extends BaseFragment{
         switch (v.getId()) {
 
             case R.id.oudoor_btn_connect:
-                new ConnectTask().execute(wrt_ip);
+                //new ConnectTask().execute(wrt_ip);
+                audioClient = new AudioClient();
+                audioClient.startAudioClient(wrt_ip, audio_port);
                 break;
 
            /* case R.id. myButton2:
@@ -135,8 +137,6 @@ public class OutdoorFragment extends BaseFragment{
 
         @Override
         protected String doInBackground(String... params) {
-            audioClient = new AudioClient();
-            audioClient.startAudioClient(wrt_ip, audio_port);
             /**
              * 在浏览器观察画面时,也是输入下面的字符串网址
              */

@@ -23,53 +23,53 @@ import java.net.UnknownHostException;
 @SuppressLint
 ({ "NewApi", "HandlerLeak" })
 public class AudioClient {
-	 private String ser_ip = "192.168.0.101";  //static final
-	 private DatagramSocket socket = null;
+
+	private String ser_ip = "192.168.0.102";  //static final
+	private DatagramSocket socket = null;
 	//使用InetAddress(Inet4Address).getByName把IP地址转换为网络地址
-	 private InetAddress serverAddress = null;
-	 private int ser_port = 8081;
-	 private int listen_port = 18082;
-	 private OutputStream out = null;
-	 private InputStream in = null;
-	 private String getmessages = "";
-	 private byte buf_to_server[],buf_to_dsp[],first_buf_to_server[],first_buf_to_dsp[];
-	 private int result;
-	 
-	    static final int frequency = 22050;  
-	    static final int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_STEREO;  
-	    static final int EncodingBitRate = AudioFormat.ENCODING_PCM_16BIT;  
-	    int recBufSize,playBufSize;  
-	    AudioRecord audioRecord;  
-	    AudioTrack audioTrack; 
-	    
+	private InetAddress serverAddress = null;
+	private int ser_port = 8081;
+	private int listen_port = 18082;
+	private long currentID;	//当前接收到的包的ID
+
+	private OutputStream out = null;
+	private InputStream in = null;
+	private String getmessages = "";
+	private byte buf_to_server[],buf_to_dsp[],first_buf_to_server[],first_buf_to_dsp[];
+	private int result;
+
+	static final int frequency = 22050;
+	static final int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_STEREO;
+	static final int EncodingBitRate = AudioFormat.ENCODING_PCM_16BIT;
+	int recBufSize,playBufSize;
+	AudioRecord audioRecord;
+	AudioTrack audioTrack;
+
 	   
-	 public AudioClient() {
+	public AudioClient() {
 
 
-		 //以下是所加的代码
-		 StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				 .detectDiskReads()
-				 .detectDiskWrites()
-				 .detectNetwork()
-				 .penaltyLog()
-				 .build());
-		 StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-				 .detectLeakedSqlLiteObjects()
-				 .detectLeakedClosableObjects()
-				 .penaltyLog()
-				 .penaltyDeath()
-				 .build());
+		//以下是所加的代码
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+			 .detectDiskReads()
+			 .detectDiskWrites()
+			 .detectNetwork()
+			 .penaltyLog()
+			 .build());
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+			 .detectLeakedSqlLiteObjects()
+			 .detectLeakedClosableObjects()
+			 .penaltyLog()
+			 .penaltyDeath()
+			 .build());
 
 
-		 createAudioRecord();
-		 createAudioTrack();
+		createAudioRecord();
+		createAudioTrack();
 
-		 buf_to_server = new byte[1024];
-		 buf_to_dsp = new byte[1024];
-		 first_buf_to_server = new byte[32768];
-		 first_buf_to_dsp = new byte[32768];
 
-	 }
+	}
+
 	public void startAudioClient(String data_ip,int data_port) {
 		//IP = data_ip;
 		//port = data_port;
@@ -88,16 +88,21 @@ public class AudioClient {
 		Thread mThread_audio_to_sock = new Thread(mRunable_audio_to_sock);
 		mThread_audio_to_sock.start();
 	}
+
 	private Runnable mRunable_audio_to_sock = new Runnable() {
 		@Override
 		public void run() {
+			Package pack = new Package();
 			audioRecord.startRecording();//开始录制
 			while (true) {
-				result = audioRecord.read(buf_to_server, 0, 1024); //read from audio
+				result = audioRecord.read(buf_to_server, 0, Package.BUFLEN); //read from audio
 				if(AudioRecord.ERROR_INVALID_OPERATION != result) {
+					pack.setData(buf_to_server);
+					pack.setId(pack.getId()+1);
+					//System.out.println("audio to sock:"+pack.getId());
 					//创建一个DatagramPacket对象，用于发送数据。
 					//参数一：要发送的数据  参数二：数据的长度  参数三：服务端的网络地址  参数四：服务器端端口号
-					DatagramPacket dataPacket = new DatagramPacket(buf_to_server, buf_to_server.length,
+					DatagramPacket dataPacket = new DatagramPacket(pack.getPackageByte(), pack.getPackageByte().length,
 							serverAddress, ser_port);
 					try {
 						socket.send(dataPacket);
@@ -111,16 +116,20 @@ public class AudioClient {
 	private Runnable mRunable_sock_to_audio = new Runnable() {
 		@Override
 		public void run() {
+			Package pack = new Package();
+			byte[] buf_sock = new byte[Package.BUFLEN+8];
 			audioTrack.play();//开始播放
 			while (true) {
 				//参数一:要接受的data 参数二：data的长度
-				DatagramPacket packet = new DatagramPacket(buf_to_dsp, buf_to_dsp.length);
+				DatagramPacket packet = new DatagramPacket(buf_sock, buf_sock.length);
 				try {
 					socket.receive(packet);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				audioTrack.write(buf_to_dsp,0, 1024);
+				pack.analysisBuf(buf_sock);
+				//System.out.println("sock to audio:"+pack.getId());
+				audioTrack.write(pack.getData(),0, Package.BUFLEN);
 			}
 		}
 	};

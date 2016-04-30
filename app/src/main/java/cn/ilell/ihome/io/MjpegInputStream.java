@@ -65,7 +65,9 @@ public class MjpegInputStream extends DataInputStream implements Serializable{
 		}
 		mis = null;
 	}
+	public void finalize() {
 
+	}
 	private MjpegInputStream(InputStream in) {
 		super(new BufferedInputStream(in, FRAME_MAX_LENGTH));
 	}

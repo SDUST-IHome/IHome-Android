@@ -11,4 +11,6 @@
     <string name="item_clicked">item clicked！</string>
     <string name="item_longclicked">item long clicked！</string>
 
+    <drawable name="clr_transparent_btn_normal">#99ffffff</drawable>
+    <drawable name="clr_transparent_pressed">#99c6c6c6</drawable>
 </resources>

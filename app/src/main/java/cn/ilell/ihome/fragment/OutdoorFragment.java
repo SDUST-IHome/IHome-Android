@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -29,13 +30,14 @@ import cn.ilell.ihome.view.MjpegView;
 public class OutdoorFragment extends BaseFragment{
 
     private Button btn_connect = null;
+    private Button btn_stop = null;
 
     private InputStream is = null;
     private MjpegInputStream mis = null;
     private MjpegView mjpegView = null;
     private AudioClient audioClient = null;
 
-    private String wrt_ip = "192.168.0.116";
+    private String wrt_ip = "192.168.0.81";
     private String ser_ip = "115.159.23.237/proxy";
     private String mjpeg_port = "8080";
     private int audio_port = 8081;
@@ -82,6 +84,9 @@ public class OutdoorFragment extends BaseFragment{
             mjpegView.startPlay();
         }
     }
+    public void onPause() {
+        audioClient.finalize();
+    }
     /**
      * 调用finish方法时，这方法将被激发
      * 设置输入流为空，调用父类的onDestroy销毁资源
@@ -92,29 +97,34 @@ public class OutdoorFragment extends BaseFragment{
     }
 
     private void initView() {
-        btn_connect = (Button) mView.findViewById(R.id.oudoor_btn_connect);
+        btn_connect = (Button) mView.findViewById(R.id.outdoor_btn_connect);
+        btn_stop = (Button) mView.findViewById(R.id.outdoor_btn_stop);
         //text = (TextView) mView.findViewById(R.id.outdoor_textView);
     }
 
     private void setListener() {
         btn_connect.setOnClickListener(this);
+        btn_stop.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.oudoor_btn_connect:
-                //new ConnectTask().execute(wrt_ip);
+            case R.id.outdoor_btn_connect:
+                new ConnectTask().execute(wrt_ip);
                 audioClient = new AudioClient();
-                audioClient.startAudioClient(wrt_ip, audio_port);
+                if (audioClient.autoStart() == 0)
+                    Toast.makeText(mContext, "无音频信号", Toast.LENGTH_SHORT).show();
                 break;
 
-           /* case R.id. myButton2:
-
-                //do something
-
-                break;*/
+            case R.id.outdoor_btn_stop:
+                mjpegView.stopPlay();
+                mis.finalize();
+                audioClient.finalize();
+                is = null;
+                mis = null;
+                break;
 
         }
     }
@@ -150,6 +160,8 @@ public class OutdoorFragment extends BaseFragment{
             if (is != null) {   //初始化jpeg流
                 MjpegInputStream.initInstance(is);
             }
+            else
+                Toast.makeText(mContext, "无视频信号", Toast.LENGTH_SHORT).show();
             return null;
         }
 

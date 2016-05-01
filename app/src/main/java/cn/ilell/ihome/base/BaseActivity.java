@@ -19,6 +19,7 @@ import java.util.List;
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.service.MsgService;
+import cn.ilell.ihome.view.RoundedImageView;
 
 /**
  * Created by lhc35 on 2016/4/13.
@@ -36,6 +37,9 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
     protected ViewPager mViewPager;
     protected FloatingActionButton mFloatingActionButton;
     protected NavigationView mNavigationView;
+
+    protected View headView;
+    protected RoundedImageView mRoundedImageView;
 
     // TabLayout中的tab标题
     protected String[] mTitles;

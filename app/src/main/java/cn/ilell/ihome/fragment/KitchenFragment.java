@@ -2,7 +2,6 @@ package cn.ilell.ihome.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ public class KitchenFragment extends BaseFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.frag_kitchen, container, false);
+        mView = inflater.inflate(R.layout.frag_webonly, container, false);
         return mView;
     }
 
@@ -31,20 +30,17 @@ public class KitchenFragment extends BaseFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.kitchen_swiperefreshlayout);
+        //mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.kitchen_swiperefreshlayout);
 
 
         // 刷新时，指示器旋转后变化的颜色
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        //mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
+        //mSwipeRefreshLayout.setOnRefreshListener(this);
 
         initView();
         setListener();
-    }
 
-    private void initView() {
-        btn = (Button) mView.findViewById(R.id.kitchen_button);
-        text = (TextView) mView.findViewById(R.id.kitchen_textView);
+        web.loadUrl("http://115.159.127.79/ihome/z-status.php");
     }
 
     private void setListener() {
@@ -55,7 +51,7 @@ public class KitchenFragment extends BaseFragment{
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.kitchen_button:
+         /*   case R.id.kitchen_button:
 
                 //do something
                 text.setText("123");

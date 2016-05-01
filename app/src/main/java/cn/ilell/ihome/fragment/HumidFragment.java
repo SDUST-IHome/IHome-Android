@@ -2,7 +2,6 @@ package cn.ilell.ihome.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,18 +30,18 @@ public class HumidFragment extends BaseFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.humid_swiperefreshlayout);
+        //mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.humid_swiperefreshlayout);
 
 
         // 刷新时，指示器旋转后变化的颜色
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        //mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
+        //mSwipeRefreshLayout.setOnRefreshListener(this);
 
         initView();
         setListener();
     }
 
-    private void initView() {
+    protected void initView() {
         btn = (Button) mView.findViewById(R.id.humid_button);
         text = (TextView) mView.findViewById(R.id.humid_textView);
     }

@@ -7,5 +7,7 @@
     <color name="main_black">#000000</color>
     <color name="main_black_grey">#6D6D6D</color>
 
-
+    <color name="color_page_white">#E6E6E6</color>
+    <color name="color_btn_white">#ffffff</color>
+    <color name="color_btn_text">#ffffff</color>
 </resources>

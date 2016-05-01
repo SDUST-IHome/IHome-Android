@@ -3,7 +3,6 @@ package cn.ilell.ihome.fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,12 +51,12 @@ public class OutdoorFragment extends BaseFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.outdoor_swiperefreshlayout);
+        //mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.outdoor_swiperefreshlayout);
 
 
         // 刷新时，指示器旋转后变化的颜色
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        //mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
+        //mSwipeRefreshLayout.setOnRefreshListener(this);
 
         mjpegView = (MjpegView) mView.findViewById(R.id.outdoor_mjpegview);
 
@@ -96,7 +95,7 @@ public class OutdoorFragment extends BaseFragment{
         super.onDestroy();
     }
 
-    private void initView() {
+    protected void initView() {
         btn_connect = (Button) mView.findViewById(R.id.outdoor_btn_connect);
         btn_stop = (Button) mView.findViewById(R.id.outdoor_btn_stop);
         //text = (TextView) mView.findViewById(R.id.outdoor_textView);

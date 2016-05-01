@@ -16,7 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -27,10 +26,16 @@ import cn.ilell.ihome.fragment.StateFragment;
 import cn.ilell.ihome.service.MsgService;
 import cn.ilell.ihome.service.OnProgressListener;
 import cn.ilell.ihome.utils.SnackbarUtil;
+import cn.ilell.ihome.view.RoundedImageView;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
 public class StateActivity extends BaseActivity {
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,7 @@ public class StateActivity extends BaseActivity {
         configViews();
 
         bindMsgService();
+
     }
 
     protected void bindMsgService() {
@@ -68,20 +74,21 @@ public class StateActivity extends BaseActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             //返回一个MsgService对象
-            msgService = ((MsgService.MsgBinder)service).getService();
+            msgService = ((MsgService.MsgBinder) service).getService();
 
             //注册回调接口来接收下载进度的变化
             msgService.setOnProgressListener(new OnProgressListener() {
                 @Override
                 public void onProgress(String recvMsg) {
-                    SnackbarUtil.show(findViewById(R.id.state_button), recvMsg, 0);
-                    TextView textView = (TextView) findViewById(R.id.state_textView);
-                    textView.setText(recvMsg);
+                    SnackbarUtil.show(findViewById(R.id.state_floatingactionbutton), recvMsg, 0);
+                    /*TextView textView = (TextView) findViewById(R.id.state_textView);
+                    textView.setText(recvMsg);*/
                 }
             });
 
         }
     };
+
     @Override
     public void onDestroy() {
         unbindService(conn);
@@ -118,7 +125,8 @@ public class StateActivity extends BaseActivity {
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
         //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/header_nav"来设置
-        mNavigationView.inflateHeaderView(R.layout.header_nav);
+        headView = mNavigationView.inflateHeaderView(R.layout.header_nav);
+        mRoundedImageView = (RoundedImageView) headView.findViewById(R.id.id_header_face);
         //给NavigationView填充Menu菜单，也可在xml中使用app:menu="@menu/menu_nav"来设置
         mNavigationView.inflateMenu(R.menu.menu_nav);
 
@@ -142,7 +150,7 @@ public class StateActivity extends BaseActivity {
         // 设置FloatingActionButton的点击事件
         mFloatingActionButton.setOnClickListener(this);
 
-
+        mRoundedImageView.setOnClickListener(this);
     }
 
     /**
@@ -204,7 +212,9 @@ public class StateActivity extends BaseActivity {
                 //关闭当前的
                 StateActivity.this.finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            };
+            }
+
+            ;
         }.start();
     }
 
@@ -226,7 +236,16 @@ public class StateActivity extends BaseActivity {
             case R.id.state_floatingactionbutton:
                 SnackbarUtil.show(v, getString(R.string.plusone), 0);
                 break;
+            case R.id.id_header_face:
+                Intent intent = new Intent();
+                //制定intent要启动的类
+                intent.setClass(StateActivity.this, LoginActivity.class);
+                //启动一个新的Activity
+                startActivity(intent);
+                break;
 
         }
     }
+
+
 }

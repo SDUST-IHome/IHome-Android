@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sunjiajia.androidnewwidgetsdemo.view;
+package cn.ilell.ihome.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;

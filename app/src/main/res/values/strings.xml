@@ -13,4 +13,6 @@
 
     <drawable name="clr_transparent_btn_normal">#99ffffff</drawable>
     <drawable name="clr_transparent_pressed">#99c6c6c6</drawable>
+    <drawable name="clr_normal">#32A8EB</drawable>
+    <drawable name="clr_pressed">#2088C4</drawable>
 </resources>

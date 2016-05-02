@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.base.BaseFragment;
@@ -16,13 +14,10 @@ import cn.ilell.ihome.base.BaseFragment;
  */
 public class HumidFragment extends BaseFragment{
 
-    private Button btn;
-    private TextView text;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.frag_humid, container, false);
+        mView = inflater.inflate(R.layout.frag_webonly, container, false);
         return mView;
     }
 
@@ -39,22 +34,19 @@ public class HumidFragment extends BaseFragment{
 
         initView();
         setListener();
-    }
 
-    protected void initView() {
-        btn = (Button) mView.findViewById(R.id.humid_button);
-        text = (TextView) mView.findViewById(R.id.humid_textView);
+        web.loadUrl("http://115.159.127.79/ihome/z-humid.php");
     }
 
     private void setListener() {
-        btn.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.humid_button:
+           /* case R.id.humid_button:
 
                 //do something
                 text.setText("123");

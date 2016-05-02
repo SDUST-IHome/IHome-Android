@@ -35,7 +35,7 @@ public class ParlorFragment extends BaseFragment{
         initView();
         setListener();
 
-        web.loadUrl("http://115.159.127.79/ihome/z-status.php");
+        web.loadUrl("http://115.159.127.79/ihome/z-parlor.php");
     }
 
     private void setListener() {

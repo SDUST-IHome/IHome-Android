@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.base.BaseFragment;
@@ -15,9 +13,6 @@ import cn.ilell.ihome.base.BaseFragment;
  * Created by Monkey on 2015/6/29.
  */
 public class BedroomFragment extends BaseFragment{
-
-    private Button btn;
-    private TextView text;
 
     @Nullable
     @Override
@@ -40,7 +35,7 @@ public class BedroomFragment extends BaseFragment{
         initView();
         setListener();
 
-        web.loadUrl("http://115.159.127.79/ihome/z-status.php");
+        web.loadUrl("http://115.159.127.79/ihome/z-bedroom.php");
     }
 
     private void setListener() {

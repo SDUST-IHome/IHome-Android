@@ -5,7 +5,7 @@
     <item android:drawable="@drawable/clr_pressed" android:state_pressed="true"/>
     -->
     <item android:drawable="@color/main_blue_light" android:state_pressed="false"/>
-    <item android:drawable="@color/main_black" android:state_pressed="true"/>
+    <item android:drawable="@color/main_blue_dark" android:state_pressed="true"/>
 
 </selector>
  

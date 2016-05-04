@@ -42,6 +42,7 @@ public class StateActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_state);
 
+
         // 初始化各种控件
         initViews();
 
@@ -55,6 +56,8 @@ public class StateActivity extends BaseActivity {
         bindMsgService();
 
     }
+
+
 
     protected void bindMsgService() {
         //绑定Service

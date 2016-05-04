@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.adapter.MyRecyclerViewAdapter;
@@ -23,9 +24,18 @@ public class BaseFragment extends Fragment implements
 
 
     protected void initView() {
+        mContext = this.getActivity();
         web = (WebView) mView.findViewById(R.id.webView);
         WebSettings settings = web.getSettings();
         settings.setJavaScriptEnabled(true);
+        //打开网页时不调用系统浏览器， 而是在本WebView中显示
+        web.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
     }
     @Override
     public void onItemClick(View view, int position) {

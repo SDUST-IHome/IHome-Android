@@ -10,7 +10,7 @@ import cn.ilell.ihome.R;
 /**
  * Created by lhc35 on 2016/5/1.
  */
-public class BaseSubPageActivity extends Activity {
+public class BaseSubPageActivity extends Activity implements View.OnClickListener {
     protected Context mContext;
 
     protected void INIT(int pageid,String title) {
@@ -26,5 +26,10 @@ public class BaseSubPageActivity extends Activity {
                 this.finish();
                 break;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

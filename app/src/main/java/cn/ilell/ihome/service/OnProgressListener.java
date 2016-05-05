@@ -5,4 +5,4 @@ package cn.ilell.ihome.service;
  */
 public interface  OnProgressListener {
     void onProgress(String recvMsg);
-}
+}   //后台消息回调接口

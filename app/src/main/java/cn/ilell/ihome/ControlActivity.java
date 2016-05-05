@@ -9,22 +9,17 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
 
-import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.BedroomFragment;
 import cn.ilell.ihome.fragment.KitchenFragment;
 import cn.ilell.ihome.fragment.ParlorFragment;
 import cn.ilell.ihome.fragment.ToiletFragment;
 import cn.ilell.ihome.utils.SnackbarUtil;
-
-import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
 public class ControlActivity extends BaseActivity {
 
@@ -42,7 +37,14 @@ public class ControlActivity extends BaseActivity {
 
         // 对各种控件进行设置、适配、填充数据
         configViews();
+        //与后台服务捆绑
+        //与后台服务捆绑
+        bindMsgService();
+        //初始化侧边栏头部
+        initNavHead();
 
+        mContext = this;
+        mClass = ControlActivity.class;
     }
 
     private void initData() {
@@ -78,83 +80,6 @@ public class ControlActivity extends BaseActivity {
 
     }
 
-    private void configViews() {
-
-        // 设置显示Toolbar
-        setSupportActionBar(mToolbar);
-
-        // 设置Drawerlayout开关指示器，即Toolbar最左边的那个icon
-        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
-        mActionBarDrawerToggle.syncState();
-        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
-
-        //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/header_nav"来设置
-        mNavigationView.inflateHeaderView(R.layout.header_nav);
-        //给NavigationView填充Menu菜单，也可在xml中使用app:menu="@menu/menu_nav"来设置
-        mNavigationView.inflateMenu(R.menu.menu_nav);
-
-        // 自己写的方法，设置NavigationView中menu的item被选中后要执行的操作
-        onNavgationViewMenuItemSelected(mNavigationView);
-
-        // 初始化ViewPager的适配器，并设置给它
-        mViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), mTitles, mFragments);
-        mViewPager.setAdapter(mViewPagerAdapter);
-        // 设置ViewPager最大缓存的页面个数
-        mViewPager.setOffscreenPageLimit(5);
-        // 给ViewPager添加页面动态监听器（为了让Toolbar中的Title可以变化相应的Tab的标题）
-        mViewPager.addOnPageChangeListener(this);
-
-        mTabLayout.setTabMode(MODE_SCROLLABLE);
-        // 将TabLayout和ViewPager进行关联，让两者联动起来
-        mTabLayout.setupWithViewPager(mViewPager);
-        // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
-        mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
-
-        // 设置FloatingActionButton的点击事件
-        mFloatingActionButton.setOnClickListener(this);
-
-
-    }
-
-    /**
-     * 设置NavigationView中menu的item被选中后要执行的操作
-     *
-     * @param mNav
-     */
-    private void onNavgationViewMenuItemSelected(NavigationView mNav) {
-        mNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                String msgString = "";
-
-                switch (menuItem.getItemId()) {
-                    case R.id.nav_menu_state:
-                        changeActivity(StateActivity.class);
-                        break;
-                    case R.id.nav_menu_control:
-                        msgString = (String) menuItem.getTitle();
-                        SnackbarUtil.show(mViewPager, msgString, 0);
-                        break;
-                    case R.id.nav_menu_history:
-                        changeActivity(HistoryActivity.class);
-                        break;
-                    case R.id.nav_menu_monitor:
-                        changeActivity(MonitorActivity.class);
-                        break;
-                }
-
-                // Menu item点击后选中，并关闭Drawerlayout
-                menuItem.setChecked(true);
-                mDrawerLayout.closeDrawers();
-
-                // android-support-design兼容包中新添加的一个类似Toast的控件。
-                //SnackbarUtil.show(mViewPager, msgString, 0);
-
-                return true;
-            }
-        });
-    }
 
     private void changeActivity(final Class mClass) {
         new Thread() {
@@ -176,8 +101,13 @@ public class ControlActivity extends BaseActivity {
             };
         }.start();
     }
+    @Override
+    public void onDestroy() {
+        unbindService(conn);
+        super.onDestroy();
+    }
 
-    private void initViews() {
+    protected void initViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.control_drawerlayout);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.control_coordinatorlayout);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.control_appbarlayout);

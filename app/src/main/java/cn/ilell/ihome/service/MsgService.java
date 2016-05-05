@@ -88,7 +88,7 @@ public class MsgService extends MyService {
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             String[] data = recvMsg.split("/");
-            if (data[0].equals("0")) {    //网关消息
+            if (data[0].equals("0")) {    //网关级消息
                 if (data[1].equals("4")) {  //火警
                     if (data[2].equals("0")) {  //取消火警
                         mNotificationManager.cancel(notifyId_WARNING);//删除一个特定的通知ID对应的通知
@@ -98,9 +98,12 @@ public class MsgService extends MyService {
                     }
                 }
             }
-            else if (data[0].equals("1")) {   //用户消息
+            else if (data[0].equals("1")) {   //用户级消息
                 if (data[1].equals("2")) {  //家庭留言更新
                     showIntentActivityNotify("您有新的家庭留言",data[2]);
+                }
+                else if (data[1].equals("3")) {  //人员到访通知
+                    showIntentActivityNotify("有客人到访",data[2]);
                 }
             }
             onProgressListener.onProgress(recvMsg);    //将消息传到前端

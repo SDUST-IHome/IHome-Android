@@ -76,6 +76,7 @@ public class StateFragment extends BaseFragment{
         }
         else
             web.loadUrl("http://115.159.127.79/ihome/z-status.php");
+        //Toast.makeText(mContext, BaseData.logined+"", Toast.LENGTH_SHORT).show();
     }
 
     private void setListener() {

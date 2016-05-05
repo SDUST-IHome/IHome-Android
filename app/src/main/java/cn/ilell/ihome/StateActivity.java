@@ -1,10 +1,7 @@
 package cn.ilell.ihome;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -12,23 +9,15 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
 
-import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.ModeFragment;
 import cn.ilell.ihome.fragment.StateFragment;
-import cn.ilell.ihome.service.MsgService;
-import cn.ilell.ihome.service.OnProgressListener;
 import cn.ilell.ihome.utils.SnackbarUtil;
-import cn.ilell.ihome.view.RoundedImageView;
-
-import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
 public class StateActivity extends BaseActivity {
 
@@ -53,45 +42,26 @@ public class StateActivity extends BaseActivity {
         // 对各种控件进行设置、适配、填充数据
         configViews();
 
+        //与后台服务捆绑
         bindMsgService();
+        //初始化侧边栏头部
+        initNavHead();
+
+        mContext = this;
+        mClass = StateActivity.class;
 
     }
 
-
-
-    protected void bindMsgService() {
-        //绑定Service
-        Intent intent = new Intent();
-        intent.setAction("cn.msgservice");
-        intent.setPackage(getPackageName());
-        bindService(intent, conn, BIND_AUTO_CREATE);
+    protected void initViews() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.state_drawerlayout);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.state_coordinatorlayout);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.state_appbarlayout);
+        mToolbar = (Toolbar) findViewById(R.id.state_toolbar);
+        mTabLayout = (TabLayout) findViewById(R.id.state_tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.state_viewpager);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.state_floatingactionbutton);
+        mNavigationView = (NavigationView) findViewById(R.id.state_navigationview);
     }
-
-
-    ServiceConnection conn = new ServiceConnection() {
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            //返回一个MsgService对象
-            msgService = ((MsgService.MsgBinder) service).getService();
-
-            //注册回调接口来接收下载进度的变化
-            msgService.setOnProgressListener(new OnProgressListener() {
-                @Override
-                public void onProgress(String recvMsg) {
-                    SnackbarUtil.show(findViewById(R.id.state_floatingactionbutton), recvMsg, 0);
-                    /*TextView textView = (TextView) findViewById(R.id.state_textView);
-                    textView.setText(recvMsg);*/
-                }
-            });
-
-        }
-    };
-
     @Override
     public void onDestroy() {
         unbindService(conn);
@@ -117,120 +87,7 @@ public class StateActivity extends BaseActivity {
         mFragments.add(1, modeFragment);
     }
 
-    private void configViews() {
 
-        // 设置显示Toolbar
-        setSupportActionBar(mToolbar);
-
-        // 设置Drawerlayout开关指示器，即Toolbar最左边的那个icon
-        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
-        mActionBarDrawerToggle.syncState();
-        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
-
-        //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/header_nav"来设置
-        headView = mNavigationView.inflateHeaderView(R.layout.header_nav);
-        mRoundedImageView = (RoundedImageView) headView.findViewById(R.id.id_header_face);
-        //给NavigationView填充Menu菜单，也可在xml中使用app:menu="@menu/menu_nav"来设置
-        mNavigationView.inflateMenu(R.menu.menu_nav);
-
-        // 自己写的方法，设置NavigationView中menu的item被选中后要执行的操作
-        onNavgationViewMenuItemSelected(mNavigationView);
-
-        // 初始化ViewPager的适配器，并设置给它
-        mViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), mTitles, mFragments);
-        mViewPager.setAdapter(mViewPagerAdapter);
-        // 设置ViewPager最大缓存的页面个数
-        mViewPager.setOffscreenPageLimit(5);
-        // 给ViewPager添加页面动态监听器（为了让Toolbar中的Title可以变化相应的Tab的标题）
-        mViewPager.addOnPageChangeListener(this);
-
-        mTabLayout.setTabMode(MODE_SCROLLABLE);
-        // 将TabLayout和ViewPager进行关联，让两者联动起来
-        mTabLayout.setupWithViewPager(mViewPager);
-        // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
-        mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
-
-        // 设置FloatingActionButton的点击事件
-        mFloatingActionButton.setOnClickListener(this);
-
-        mRoundedImageView.setOnClickListener(this);
-    }
-
-    /**
-     * 设置NavigationView中menu的item被选中后要执行的操作
-     *
-     * @param mNav
-     */
-    private void onNavgationViewMenuItemSelected(NavigationView mNav) {
-        mNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                String msgString = "";
-
-                switch (menuItem.getItemId()) {
-                    case R.id.nav_menu_state:
-                        msgString = (String) menuItem.getTitle();
-                        SnackbarUtil.show(mViewPager, msgString, 0);
-                        //开始下载
-                        msgService.connectServer();
-                        break;
-                    case R.id.nav_menu_control:
-                        changeActivity(ControlActivity.class);
-                        break;
-                    case R.id.nav_menu_history:
-                        changeActivity(HistoryActivity.class);
-                        break;
-                    case R.id.nav_menu_monitor:
-                        changeActivity(MonitorActivity.class);
-                        break;
-                }
-
-                // Menu item点击后选中，并关闭Drawerlayout
-                menuItem.setChecked(true);
-                mDrawerLayout.closeDrawers();
-
-                // android-support-design兼容包中新添加的一个类似Toast的控件。
-                //SnackbarUtil.show(mViewPager, msgString, 0);
-
-                return true;
-            }
-        });
-    }
-
-    private void changeActivity(final Class mCalss) {
-        new Thread() {
-            public void run() {
-                //休眠0.256
-                try {
-                    Thread.sleep(256);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent();
-                //制定intent要启动的类
-                intent.setClass(StateActivity.this, mCalss);
-                //启动一个新的Activity
-                startActivity(intent);
-                //关闭当前的
-                StateActivity.this.finish();
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
-
-            ;
-        }.start();
-    }
-
-    private void initViews() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.state_drawerlayout);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.state_coordinatorlayout);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.state_appbarlayout);
-        mToolbar = (Toolbar) findViewById(R.id.state_toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.state_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.state_viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.state_floatingactionbutton);
-        mNavigationView = (NavigationView) findViewById(R.id.state_navigationview);
-    }
 
     @Override
     public void onClick(View v) {

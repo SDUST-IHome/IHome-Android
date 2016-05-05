@@ -1,15 +1,6 @@
 package cn.ilell.ihome;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import java.util.ArrayList;
 
@@ -17,14 +8,13 @@ import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.BrightFragment;
 import cn.ilell.ihome.fragment.HumidFragment;
 import cn.ilell.ihome.fragment.TempFragment;
-import cn.ilell.ihome.utils.SnackbarUtil;
 
 public class HistoryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.activity_main);
 
         // 初始化各种控件
         initViews();
@@ -37,8 +27,6 @@ public class HistoryActivity extends BaseActivity {
         configViews();
         //与后台服务捆绑
         bindMsgService();
-        //初始化侧边栏头部
-        initNavHead();
 
         mContext = this;
         mClass = HistoryActivity.class;
@@ -82,26 +70,4 @@ public class HistoryActivity extends BaseActivity {
 
     }
 
-    protected void initViews() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.history_drawerlayout);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.history_coordinatorlayout);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.history_appbarlayout);
-        mToolbar = (Toolbar) findViewById(R.id.history_toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.history_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.history_viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.history_floatingactionbutton);
-        mNavigationView = (NavigationView) findViewById(R.id.history_navigationview);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            // FloatingActionButton的点击事件
-            case R.id.history_floatingactionbutton:
-                SnackbarUtil.show(v, getString(R.string.plusone), 0);
-                break;
-
-        }
-    }
 }

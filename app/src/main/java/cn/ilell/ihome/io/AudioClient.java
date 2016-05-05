@@ -197,10 +197,10 @@ public class AudioClient {
 				playBufSize, AudioTrack.MODE_STREAM);
 	}	//创建放音
 
-	public void finalize() {
-		socket.close();
+	public void stop() {
 		audioRecord.stop();
 		audioTrack.stop();
+		socket.close();
 	}
 
 }

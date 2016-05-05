@@ -20,18 +20,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import cn.ilell.ihome.ControlActivity;
 import cn.ilell.ihome.HistoryActivity;
+import cn.ilell.ihome.LoginActivity;
 import cn.ilell.ihome.MonitorActivity;
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.StateActivity;
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.service.MsgService;
 import cn.ilell.ihome.service.OnProgressListener;
+import cn.ilell.ihome.utils.SnackbarUtil;
 import cn.ilell.ihome.view.RoundedImageView;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
@@ -79,8 +80,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             msgService.setOnProgressListener(new OnProgressListener() {
                 @Override
                 public void onProgress(String recvMsg) {
-                    //SnackbarUtil.show(findViewById(R.id.state_floatingactionbutton), recvMsg, 0);
-                    /*TextView textView = (TextView) findViewById(R.id.state_textView);
+                    SnackbarUtil.show(findViewById(R.id.main_floatingactionbutton), recvMsg, 0);
+                    /*TextView textView = (TextView) findViewById(R.id.main_textView);
                     textView.setText(recvMsg);*/
                 }
             });
@@ -88,13 +89,27 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     };
 
+    protected void INIT() {
+
+    }
+
+    protected void initViews() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinatorlayout);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.main_appbarlayout);
+        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        mTabLayout = (TabLayout) findViewById(R.id.main_tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.main_floatingactionbutton);
+        mNavigationView = (NavigationView) findViewById(R.id.main_navigationview);
+    }
 
     protected void initNavHead() {
         TextView text_name = (TextView) headView.findViewById(R.id.id_header_authorname);
         TextView text_homeid = (TextView) headView.findViewById(R.id.id_header_homeid);
         text_name.setText(BaseData.account_name);
         text_homeid.setText(BaseData.home_id);
-        Toast.makeText(BaseActivity.this, BaseData.account_name, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(BaseActivity.this, BaseData.account_name, Toast.LENGTH_SHORT).show();
     }
 
     protected void bindMsgService() {
@@ -138,10 +153,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
         mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
 
-        // 设置FloatingActionButton的点击事件
-        mFloatingActionButton.setOnClickListener(this);
-
-        mRoundedImageView.setOnClickListener(this);
+        //设置侧边栏头部显示
+        initNavHead();
     }
 
     /**
@@ -158,19 +171,19 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_menu_state:
-                        //if (mClass != StateActivity.class)
+                        if (mClass != StateActivity.class)
                             changeActivity(StateActivity.class);
                         break;
                     case R.id.nav_menu_control:
-                        //if (mClass != ControlActivity.class)
+                        if (mClass != ControlActivity.class)
                             changeActivity(ControlActivity.class);
                         break;
                     case R.id.nav_menu_history:
-                        //if (mClass != HistoryActivity.class)
+                        if (mClass != HistoryActivity.class)
                             changeActivity(HistoryActivity.class);
                         break;
                     case R.id.nav_menu_monitor:
-                        //if (mClass != MonitorActivity.class)
+                        if (mClass != MonitorActivity.class)
                             changeActivity(MonitorActivity.class);
                         break;
                 }
@@ -186,6 +199,7 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         });
     }
+
     private void changeActivity(final Class orderClass) {
         new Thread() {
             public void run() {
@@ -215,6 +229,19 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         }.start();
     }
+
+    public void onFloatingactionButtonClick(View v) {
+        SnackbarUtil.show(v, getString(R.string.plusone), 0);
+    }   //浮动按钮单击事件
+
+    public void onRoundedImageViewClick(View v) {
+        Intent intent = new Intent();
+        //制定intent要启动的类
+        intent.setClass(mContext, LoginActivity.class);
+        //启动一个新的Activity
+        startActivity(intent);
+    }   //侧边栏图片按钮单击事件
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_my, menu);

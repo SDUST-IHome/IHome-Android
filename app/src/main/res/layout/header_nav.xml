@@ -8,6 +8,7 @@
 
     <cn.ilell.ihome.view.RoundedImageView
         android:id="@+id/id_header_face"
+        android:onClick="onRoundedImageViewClick"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:scaleType="fitXY"

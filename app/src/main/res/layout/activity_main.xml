@@ -1,6 +1,6 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/history_drawerlayout"
+    android:id="@+id/main_drawerlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +10,7 @@
         例如：LinearLayout布局或者RelativeLayout布局；
     也可以是单个控件，
         如 TextView等  -->
-    <include layout="@layout/content_history" />
+    <include layout="@layout/content_main" />
 
 
     <!-- 第二个位置 -->
@@ -38,7 +38,7 @@
             app:itemBackground:
     -->
     <android.support.design.widget.NavigationView
-        android:id="@+id/history_navigationview"
+        android:id="@+id/main_navigationview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:itemTextColor="@color/selector_nav_menu_textcolor"

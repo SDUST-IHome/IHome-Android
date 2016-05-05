@@ -1,23 +1,12 @@
 package cn.ilell.ihome;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import java.util.ArrayList;
 
 import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.ModeFragment;
 import cn.ilell.ihome.fragment.StateFragment;
-import cn.ilell.ihome.utils.SnackbarUtil;
 
 public class StateActivity extends BaseActivity {
 
@@ -29,8 +18,7 @@ public class StateActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_state);
-
+        setContentView(R.layout.activity_main);
 
         // 初始化各种控件
         initViews();
@@ -44,24 +32,12 @@ public class StateActivity extends BaseActivity {
 
         //与后台服务捆绑
         bindMsgService();
-        //初始化侧边栏头部
-        initNavHead();
 
         mContext = this;
         mClass = StateActivity.class;
 
     }
 
-    protected void initViews() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.state_drawerlayout);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.state_coordinatorlayout);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.state_appbarlayout);
-        mToolbar = (Toolbar) findViewById(R.id.state_toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.state_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.state_viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.state_floatingactionbutton);
-        mNavigationView = (NavigationView) findViewById(R.id.state_navigationview);
-    }
     @Override
     public void onDestroy() {
         unbindService(conn);
@@ -85,26 +61,6 @@ public class StateActivity extends BaseActivity {
         ModeFragment modeFragment = new ModeFragment();
         modeFragment.setArguments(modeBundle);
         mFragments.add(1, modeFragment);
-    }
-
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            // FloatingActionButton的点击事件
-            case R.id.state_floatingactionbutton:
-                SnackbarUtil.show(v, getString(R.string.plusone), 0);
-                break;
-            case R.id.id_header_face:
-                Intent intent = new Intent();
-                //制定intent要启动的类
-                intent.setClass(StateActivity.this, LoginActivity.class);
-                //启动一个新的Activity
-                startActivity(intent);
-                break;
-
-        }
     }
 
 

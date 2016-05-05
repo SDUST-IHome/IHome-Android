@@ -4,43 +4,21 @@
     android:layout_height="match_parent"
     android:weightSum="4">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        >
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:text="开启楼宇对讲"
-            android:textColor="#000"
-            android:id="@+id/outdoor_btn_connect"
-            android:background="@drawable/selector_transparent_button"
-            android:layout_gravity="center_vertical" />
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:text="关闭楼宇对讲"
-            android:textColor="#000"
-            android:id="@+id/outdoor_btn_stop"
-            android:background="@drawable/selector_transparent_button"
-            android:layout_gravity="center_vertical" />
-    </LinearLayout>
 
 
 
-    <cn.ilell.ihome.view.MjpegView
-        android:id="@+id/outdoor_mjpegview"
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="楼宇对讲"
+            android:textSize="20dp"
+            android:textOn="楼宇对讲已开启"
+            android:textOff="楼宇对讲未开启"
+            android:id="@+id/outdoor_switch" />
+
+    <WebView
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3" />
-
+        android:layout_height="match_parent"
+        android:id="@+id/webView" />
 
 </LinearLayout>

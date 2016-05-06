@@ -20,11 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import cn.ilell.ihome.ControlActivity;
+import cn.ilell.ihome.FamilyMemoActivity;
+import cn.ilell.ihome.FamilyMsgActivity;
 import cn.ilell.ihome.HistoryActivity;
 import cn.ilell.ihome.LoginActivity;
 import cn.ilell.ihome.MonitorActivity;
@@ -251,7 +252,19 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         int id = item.getItemId();
 
         if (id == R.id.bar_menu_msg) {
-            Toast.makeText(BaseActivity.this, "menu", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            //制定intent要启动的类
+            intent.setClass(mContext, FamilyMsgActivity.class);
+            //启动一个新的Activity
+            mContext.startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.bar_menu_memo) {
+            Intent intent = new Intent();
+            //制定intent要启动的类
+            intent.setClass(mContext, FamilyMemoActivity.class);
+            //启动一个新的Activity
+            mContext.startActivity(intent);
             return true;
         }
 

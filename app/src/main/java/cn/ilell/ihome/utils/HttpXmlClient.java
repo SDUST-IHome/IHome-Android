@@ -9,7 +9,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -28,16 +27,18 @@ import java.util.Set;
 
 
 public class HttpXmlClient {
+    private static DefaultHttpClient httpclient;
+    private static HttpPost post;
     //private static Logger log = Logger.getLogger(HttpXmlClient.class);
 
     public static String post(String url, Map<String, String> params) {
-        DefaultHttpClient httpclient = new DefaultHttpClient();
+        //httpclient = new DefaultHttpClient();
         String body = null;
 
         //log.info("create httppost:" + url);
-        HttpPost post = postForm(url, params);
+        post = postForm(url, params);
 
-        body = invoke(httpclient, post);
+        body = invoke(post);
 
         httpclient.getConnectionManager().shutdown();
 
@@ -57,9 +58,9 @@ public class HttpXmlClient {
 
         httpclient.getConnectionManager().shutdown();*/
         try{
-            HttpClient httpClient = new DefaultHttpClient();
+            httpclient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
-            HttpResponse httpResponse = httpClient.execute(httpGet);
+            HttpResponse httpResponse = httpclient.execute(httpGet);
             if(httpResponse.getStatusLine().getStatusCode()==200){
                 String result = EntityUtils.toString(httpResponse.getEntity());
                 return result;
@@ -69,10 +70,9 @@ public class HttpXmlClient {
     }
 
 
-    private static String invoke(DefaultHttpClient httpclient,
-                                 HttpUriRequest httpost) {
+    private static String invoke(HttpUriRequest httpost) {
 
-        HttpResponse response = sendRequest(httpclient, httpost);
+        HttpResponse response = sendRequest(httpost);
         String body = paseResponse(response);
 
         return body;
@@ -99,8 +99,7 @@ public class HttpXmlClient {
         return body;
     }
 
-    private static HttpResponse sendRequest(DefaultHttpClient httpclient,
-                                            HttpUriRequest httpost) {
+    private static HttpResponse sendRequest(HttpUriRequest httpost) {
         //log.info("execute post...");
         HttpResponse response = null;
 

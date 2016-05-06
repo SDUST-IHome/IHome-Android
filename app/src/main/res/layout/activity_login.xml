@@ -73,7 +73,6 @@
 
                     <Button
                         android:id="@+id/login_btn_login"
-                        android:onClick="onFormKuaiTongAcntClick"
                         android:background="@drawable/selector_ok_button"
                         android:textColor="@color/color_btn_text"
                         android:textSize="16dp"
@@ -91,7 +90,6 @@
 
                     <Button
                         android:id="@+id/login_btn_regist"
-                        android:onClick="onFormKuaiTongAcntClick"
                         android:background="@drawable/selector_ok_button"
                         android:textColor="@color/color_btn_text"
                         android:textSize="16dp"

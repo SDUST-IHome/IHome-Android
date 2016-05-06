@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.BrightFragment;
 import cn.ilell.ihome.fragment.HumidFragment;
+import cn.ilell.ihome.fragment.RecordFragment;
 import cn.ilell.ihome.fragment.TempFragment;
 
 public class HistoryActivity extends BaseActivity {
@@ -31,11 +32,7 @@ public class HistoryActivity extends BaseActivity {
         mContext = this;
         mClass = HistoryActivity.class;
     }
-    @Override
-    public void onDestroy() {
-        unbindService(conn);
-        super.onDestroy();
-    }
+
     private void initData() {
 
         // Tab的标题采用string-array的方法保存，在res/values/arrays.xml中写
@@ -61,13 +58,21 @@ public class HistoryActivity extends BaseActivity {
         BrightFragment brightFragment = new BrightFragment();
         brightFragment.setArguments(brightBundle);
         mFragments.add(2, brightFragment);
-/*
-        Bundle bedroomBundle = new Bundle();
-        bedroomBundle.putInt("flag", 3);
-        BedroomFragment bedroomFragment = new BedroomFragment();
-        bedroomFragment.setArguments(bedroomBundle);
-        mFragments.add(3, bedroomFragment);*/
+
+        Bundle recordBundle = new Bundle();
+        recordBundle.putInt("flag", 3);
+        RecordFragment recordFragment = new RecordFragment();
+        recordFragment.setArguments(recordBundle);
+        mFragments.add(3, recordFragment);
 
     }
+
+
+    @Override
+    public void onDestroy() {
+        unbindService(conn);
+        super.onDestroy();
+    }
+
 
 }

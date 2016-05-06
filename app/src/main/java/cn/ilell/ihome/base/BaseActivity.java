@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -249,7 +250,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.bar_menu_msg) {
+            Toast.makeText(BaseActivity.this, "menu", Toast.LENGTH_SHORT).show();
             return true;
         }
 

@@ -1,6 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MyActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+    <item android:id="@+id/bar_menu_msg" android:title="@string/str_menu_msg"></item>
+    <item android:id="@+id/bar_menu_memo" android:title="@string/str_menu_memo"></item>
+    <item android:id="@+id/bar_menu_face" android:title="@string/str_menu_face"></item>
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

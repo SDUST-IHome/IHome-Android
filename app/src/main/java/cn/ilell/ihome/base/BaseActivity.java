@@ -89,10 +89,6 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     };
 
-    protected void INIT() {
-
-    }
-
     protected void initViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinatorlayout);
@@ -109,6 +105,7 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         TextView text_homeid = (TextView) headView.findViewById(R.id.id_header_homeid);
         text_name.setText(BaseData.account_name);
         text_homeid.setText(BaseData.home_id);
+
         //Toast.makeText(BaseActivity.this, BaseData.account_name, Toast.LENGTH_SHORT).show();
     }
 

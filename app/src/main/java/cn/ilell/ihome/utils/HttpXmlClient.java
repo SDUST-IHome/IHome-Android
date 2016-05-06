@@ -3,11 +3,13 @@ package cn.ilell.ihome.utils;
 /**
  * Created by lhc35 on 2016/5/4.
  */
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -43,16 +45,27 @@ public class HttpXmlClient {
     }
 
     public static String get(String url) {
-        DefaultHttpClient httpclient = new DefaultHttpClient();
+        /*DefaultHttpClient httpclient = new DefaultHttpClient();
         String body = null;
 
         //log.info("create httppost:" + url);
+
         HttpGet get = new HttpGet(url);
+
+
         body = invoke(httpclient, get);
 
-        httpclient.getConnectionManager().shutdown();
-
-        return body;
+        httpclient.getConnectionManager().shutdown();*/
+        try{
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            if(httpResponse.getStatusLine().getStatusCode()==200){
+                String result = EntityUtils.toString(httpResponse.getEntity());
+                return result;
+            }
+        }catch(Exception e){}
+        return "failed";
     }
 
 

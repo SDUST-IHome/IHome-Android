@@ -38,9 +38,9 @@ public class OutdoorFragment extends BaseFragment{
 
     }
 
-    public void onPause() {
+    /*public void onPause() {
         audioClient.stop();
-    }
+    }*/
     /**
      * 调用finish方法时，这方法将被激发
      * 设置输入流为空，调用父类的onDestroy销毁资源

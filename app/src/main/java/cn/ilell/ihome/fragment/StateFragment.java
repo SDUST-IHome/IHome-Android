@@ -1,18 +1,13 @@
 package cn.ilell.ihome.fragment;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cn.ilell.ihome.LoginActivity;
 import cn.ilell.ihome.R;
-import cn.ilell.ihome.base.BaseData;
 import cn.ilell.ihome.base.BaseFragment;
-import cn.ilell.ihome.utils.HttpXmlClient;
 
 /**
  * Created by Monkey on 2015/6/29.
@@ -33,13 +28,12 @@ public class StateFragment extends BaseFragment{
         initView();
 
         //检测登录
-        initLogin();
-
-
+        //initLogin();
         setListener();
+        web.loadUrl("http://115.159.127.79/ihome/z-status.php");
     }
 
-    private void initLogin() {
+    /*private void initLogin() {
         if (BaseData.logined == false) {
             SharedPreferences data = mContext.getSharedPreferences("IHomeAccount", 0);
             String user = data.getString("user","");
@@ -77,7 +71,7 @@ public class StateFragment extends BaseFragment{
         else
             web.loadUrl("http://115.159.127.79/ihome/z-status.php");
         //Toast.makeText(mContext, BaseData.logined+"", Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
     private void setListener() {
 

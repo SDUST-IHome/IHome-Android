@@ -1,12 +1,15 @@
 package cn.ilell.ihome.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.ilell.ihome.LoginActivity;
 import cn.ilell.ihome.R;
+import cn.ilell.ihome.base.BaseData;
 import cn.ilell.ihome.base.BaseFragment;
 
 /**
@@ -29,6 +32,14 @@ public class StateFragment extends BaseFragment{
 
         //检测登录
         //initLogin();
+        if (BaseData.logined == false) {
+            Intent intent = new Intent();
+            ///制定intent要启动的类
+            intent.setClass(mContext, LoginActivity.class);
+            //启动一个新的Activity
+            startActivity(intent);
+            getActivity().finish();
+        }
         setListener();
         web.loadUrl("http://115.159.127.79/ihome/z-status.php");
     }

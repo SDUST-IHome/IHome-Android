@@ -99,13 +99,19 @@ public class WelcomeActivity extends Activity {
             else
                 Toast.makeText(WelcomeActivity.this, result, Toast.LENGTH_SHORT).show();
         }
-        Intent intent = new Intent();
+        /*Intent intent = new Intent();
         ///制定intent要启动的类
         intent.setClass(WelcomeActivity.this, LoginActivity.class);
         //启动一个新的Activity
         startActivity(intent);
+        finish();*/
+        Intent intent = new Intent();
+        //制定intent要启动的类
+        intent.setClass(WelcomeActivity.this, StateActivity.class);
+        //启动一个新的Activity
+        startActivity(intent);
+        //关闭当前的
         finish();
-
         return false;
     }
 

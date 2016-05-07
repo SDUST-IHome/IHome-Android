@@ -1,9 +1,5 @@
 package cn.ilell.ihome.utils;
 
-/**
- * Created by lhc35 on 2016/5/4.
- */
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -25,7 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
+/**
+ * Created by lhc35 on 2016/5/4.
+ */
 public class HttpXmlClient {
     private static DefaultHttpClient httpclient;
     private static HttpPost post;
@@ -46,7 +44,7 @@ public class HttpXmlClient {
     }
 
     public static String get(String url) {
-        /*DefaultHttpClient httpclient = new DefaultHttpClient();
+        /*httpclient = new DefaultHttpClient();
         String body = null;
 
         //log.info("create httppost:" + url);
@@ -54,9 +52,9 @@ public class HttpXmlClient {
         HttpGet get = new HttpGet(url);
 
 
-        body = invoke(httpclient, get);
+        body = invoke(get);
 
-        httpclient.getConnectionManager().shutdown();*/
+        //httpclient.getConnectionManager().shutdown();*/
         try{
             httpclient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
@@ -133,3 +131,5 @@ public class HttpXmlClient {
         return httpost;
     }
 }
+
+

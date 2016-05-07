@@ -88,6 +88,8 @@ public class LoginActivity extends BaseSubPageActivity {
                 if (!user.isEmpty() && !pwd.isEmpty()) {
                     String url = "http://115.159.127.79/ihome/backdeal_mobile/CheckLogin.php?Username="+
                             user+"&Password="+pwd;
+                   // HttpUtils httpUtils = new HttpUtils();
+                   // String result = httpUtils.HttpPost(user,pwd);
                     String result = HttpXmlClient.get(url);
                     if (result.charAt(0) == 'l') {
                         Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
@@ -103,11 +105,18 @@ public class LoginActivity extends BaseSubPageActivity {
                         editor.putString("password",pwd);
                         editor.commit();
 
-
+                        Intent intent = new Intent();
+                        ///制定intent要启动的类
+                        intent.setClass(LoginActivity.this, StateActivity.class);
+                        //启动一个新的Activity
+                        startActivity(intent);
+                        finish();
                     }
                     else
                         Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
                 }
+                else
+                    Toast.makeText(LoginActivity.this, "请输入用户名密码", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.login_btn_regist:
                 Intent intent = new Intent();
@@ -118,6 +127,21 @@ public class LoginActivity extends BaseSubPageActivity {
                 finish();
                 break;
 
+        }
+    }
+
+    public void onTitleBarClick(View v) {
+        switch (v.getId()) {
+            case R.id.title_bar_back_btn:
+                if (BaseData.logined == true) {
+                    Intent intent = new Intent();
+                    ///制定intent要启动的类
+                    intent.setClass(LoginActivity.this, StateActivity.class);
+                    //启动一个新的Activity
+                    startActivity(intent);
+                }
+                this.finish();
+                break;
         }
     }
 }

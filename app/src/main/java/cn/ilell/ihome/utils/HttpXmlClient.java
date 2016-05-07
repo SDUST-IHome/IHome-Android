@@ -40,7 +40,7 @@ public class HttpXmlClient {
 
         body = invoke(post);
 
-        httpclient.getConnectionManager().shutdown();
+        //httpclient.getConnectionManager().shutdown();
 
         return body;
     }

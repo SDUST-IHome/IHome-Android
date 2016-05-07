@@ -9,13 +9,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import cn.ilell.ihome.R;
-import cn.ilell.ihome.utils.HttpXmlClient;
 
 /**
  * Created by lhc35 on 2016/5/6.
@@ -59,10 +54,4 @@ public class BaseFamilyActivity extends Activity{
         }
     }
 
-    public void onFamilyClick(View v) {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Content", edit.getText().toString());
-        String result = HttpXmlClient.post(backUrl, params);
-        Toast.makeText(BaseFamilyActivity.this, result, Toast.LENGTH_SHORT).show();
-    }
 }

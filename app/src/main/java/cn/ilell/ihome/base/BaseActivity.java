@@ -24,6 +24,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.ilell.ihome.ControlActivity;
+import cn.ilell.ihome.FamilyFaceActivity;
 import cn.ilell.ihome.FamilyMemoActivity;
 import cn.ilell.ihome.FamilyMsgActivity;
 import cn.ilell.ihome.HistoryActivity;
@@ -263,6 +264,14 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             Intent intent = new Intent();
             //制定intent要启动的类
             intent.setClass(mContext, FamilyMemoActivity.class);
+            //启动一个新的Activity
+            mContext.startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.bar_menu_face) {
+            Intent intent = new Intent();
+            //制定intent要启动的类
+            intent.setClass(mContext, FamilyFaceActivity.class);
             //启动一个新的Activity
             mContext.startActivity(intent);
             return true;

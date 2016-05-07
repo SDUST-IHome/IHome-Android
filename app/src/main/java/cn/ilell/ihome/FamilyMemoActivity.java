@@ -1,8 +1,14 @@
 package cn.ilell.ihome;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.ilell.ihome.base.BaseFamilyActivity;
+import cn.ilell.ihome.utils.HttpXmlClient;
 
 /**
  * Created by lhc35 on 2016/5/6.
@@ -13,5 +19,12 @@ public class FamilyMemoActivity extends BaseFamilyActivity {
         INIT("家庭备忘录","添加","例如:这周六全家郊游");
         web.loadUrl("http://115.159.127.79/ihome/z-familymemo.php");
         backUrl = "http://115.159.127.79/ihome/backdeal/AddNote.php";
+    }
+
+    public void onFamilyClick(View v) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("Note", edit.getText().toString());
+        String result = HttpXmlClient.post(backUrl, params);
+        Toast.makeText(FamilyMemoActivity.this, result, Toast.LENGTH_SHORT).show();
     }
 }

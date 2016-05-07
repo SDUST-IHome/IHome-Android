@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.ModeFragment;
+import cn.ilell.ihome.fragment.ScheduleFragment;
 import cn.ilell.ihome.fragment.StateFragment;
 
 public class StateActivity extends BaseActivity {
@@ -51,16 +52,24 @@ public class StateActivity extends BaseActivity {
 
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
+
         Bundle stateBundle = new Bundle();
         stateBundle.putInt("flag", 0);
         StateFragment stateFragment = new StateFragment();
         stateFragment.setArguments(stateBundle);
         mFragments.add(0, stateFragment);
+
         Bundle modeBundle = new Bundle();
         modeBundle.putInt("flag", 1);
         ModeFragment modeFragment = new ModeFragment();
         modeFragment.setArguments(modeBundle);
         mFragments.add(1, modeFragment);
+
+        Bundle sheduleBundle = new Bundle();
+        sheduleBundle.putInt("flag", 2);
+        ScheduleFragment sheduleFragment = new ScheduleFragment();
+        sheduleFragment.setArguments(sheduleBundle);
+        mFragments.add(2, sheduleFragment);
     }
 
 

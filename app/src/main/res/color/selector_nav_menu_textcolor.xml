@@ -4,4 +4,7 @@
     <item android:color="@color/main_blue_light" android:state_checked="true" />
     <item android:color="@color/main_black_grey" />
 
+
+    <item android:color="@color/color_text_black" />
+
 </selector>

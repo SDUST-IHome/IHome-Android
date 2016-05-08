@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import cn.ilell.ihome.base.BaseData;
 import cn.ilell.ihome.service.MsgService;
 import cn.ilell.ihome.service.OnProgressListener;
@@ -55,6 +57,9 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        HttpXmlClient.httpclient = new DefaultHttpClient(); //初始化http
+
         initViewAndListener();
 
         SharedPreferences data_local = getSharedPreferences("IHomeAccount", 0);

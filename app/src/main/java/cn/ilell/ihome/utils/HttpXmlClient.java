@@ -25,12 +25,11 @@ import java.util.Set;
  * Created by lhc35 on 2016/5/4.
  */
 public class HttpXmlClient {
-    private static DefaultHttpClient httpclient;
-
+    public static DefaultHttpClient httpclient;;
     //private static Logger log = Logger.getLogger(HttpXmlClient.class);
 
     public static String post(String url, Map<String, String> params) {
-        DefaultHttpClient http = new DefaultHttpClient();
+        //httpclient = new DefaultHttpClient();
         HttpPost post;
         String body = null;
 
@@ -39,7 +38,7 @@ public class HttpXmlClient {
 
         body = invoke(post);
 
-        http.getConnectionManager().shutdown();
+        //httpclient.getConnectionManager().shutdown();
 
         return body;
     }
@@ -57,7 +56,7 @@ public class HttpXmlClient {
 
         //httpclient.getConnectionManager().shutdown();*/
         try{
-            httpclient = new DefaultHttpClient();
+            //httpclient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
             HttpResponse httpResponse = httpclient.execute(httpGet);
             if(httpResponse.getStatusLine().getStatusCode()==200){

@@ -32,6 +32,7 @@ import cn.ilell.ihome.LoginActivity;
 import cn.ilell.ihome.MonitorActivity;
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.RegistActivity;
+import cn.ilell.ihome.ScheduleActivity;
 import cn.ilell.ihome.StateActivity;
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.service.MsgService;
@@ -232,7 +233,12 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     public void onFloatingactionButtonClick(View v) {
-        SnackbarUtil.show(v, getString(R.string.plusone), 0);
+        //SnackbarUtil.show(v, getString(R.string.plusone), 0);
+        Intent intent = new Intent();
+        //制定intent要启动的类
+        intent.setClass(mContext, ScheduleActivity.class);
+        //启动一个新的Activity
+        startActivity(intent);
     }   //浮动按钮单击事件
 
     public void onRoundedImageViewClick(View v) {

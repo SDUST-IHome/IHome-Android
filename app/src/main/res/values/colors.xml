@@ -10,4 +10,5 @@
     <color name="color_page_white">#E6E6E6</color>
     <color name="color_btn_white">#ffffff</color>
     <color name="color_btn_text">#ffffff</color>
+    <color name="color_text_black">#000</color>
 </resources>

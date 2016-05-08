@@ -118,15 +118,6 @@ public class LoginActivity extends BaseSubPageActivity {
                 else
                     Toast.makeText(LoginActivity.this, "请输入用户名密码", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.login_btn_regist:
-                Intent intent = new Intent();
-                ///制定intent要启动的类
-                intent.setClass(LoginActivity.this, RegistActivity.class);
-                //启动一个新的Activity
-                startActivity(intent);
-                finish();
-                break;
-
         }
     }
 

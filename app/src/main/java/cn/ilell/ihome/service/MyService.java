@@ -13,8 +13,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 
+import cn.ilell.ihome.MonitorActivity;
 import cn.ilell.ihome.R;
-import cn.ilell.ihome.StateActivity;
 
 /**
  * Created by lhc35 on 2016/4/17.
@@ -48,7 +48,7 @@ public class MyService extends Service {
     }
 
     /** 显示通知栏点击跳转到指定Activity */
-    public void showIntentActivityNotify(String title,String content){
+    public void showIntentActivityNotify(String title,String content,Class orderClass){
         // Notification.FLAG_ONGOING_EVENT --设置常驻 Flag;Notification.FLAG_AUTO_CANCEL 通知栏上点击此通知后自动清除此通知
 //		notification.flags = Notification.FLAG_AUTO_CANCEL; //在通知栏上点击此通知后自动清除此通知
         mBuilder.setAutoCancel(true)//点击后让通知将消失
@@ -56,7 +56,7 @@ public class MyService extends Service {
                 .setContentText(content)
                 .setTicker(title);
         //点击的意图ACTION是跳转到Intent
-        Intent resultIntent = new Intent(this, StateActivity.class);
+        Intent resultIntent = new Intent(this, orderClass);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(pendingIntent);
@@ -68,7 +68,7 @@ public class MyService extends Service {
 //		Notification mNotification  = new Notification.Builder(this).getNotification();//这种方式已经过时
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
 //		//PendingIntent 跳转动作
-        Intent resultIntent = new Intent(this, StateActivity.class);
+        Intent resultIntent = new Intent(this, MonitorActivity.class);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent=PendingIntent.getActivity(this, 0,resultIntent, 0);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher)

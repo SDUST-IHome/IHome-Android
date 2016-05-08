@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import cn.ilell.ihome.FamilyMsgActivity;
+import cn.ilell.ihome.MonitorActivity;
+
 /**
  * Created by lhc35 on 2016/4/16.
  */
@@ -100,10 +103,10 @@ public class MsgService extends MyService {
             }
             else if (data[0].equals("1")) {   //用户级消息
                 if (data[1].equals("2")) {  //家庭留言更新
-                    showIntentActivityNotify("您有新的家庭留言",data[2]);
+                    showIntentActivityNotify("您有新的家庭留言",data[2], FamilyMsgActivity.class);
                 }
                 else if (data[1].equals("3")) {  //人员到访通知
-                    showIntentActivityNotify("有客人到访",data[2]);
+                    showIntentActivityNotify("有客人到访",data[2], MonitorActivity.class);
                 }
             }
             onProgressListener.onProgress(recvMsg);    //将消息传到前端

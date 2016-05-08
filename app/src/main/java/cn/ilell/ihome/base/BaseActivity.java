@@ -31,6 +31,7 @@ import cn.ilell.ihome.HistoryActivity;
 import cn.ilell.ihome.LoginActivity;
 import cn.ilell.ihome.MonitorActivity;
 import cn.ilell.ihome.R;
+import cn.ilell.ihome.RegistActivity;
 import cn.ilell.ihome.StateActivity;
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.service.MsgService;
@@ -272,6 +273,14 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             Intent intent = new Intent();
             //制定intent要启动的类
             intent.setClass(mContext, FamilyFaceActivity.class);
+            //启动一个新的Activity
+            mContext.startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.bar_menu_regist) {
+            Intent intent = new Intent();
+            //制定intent要启动的类
+            intent.setClass(mContext, RegistActivity.class);
             //启动一个新的Activity
             mContext.startActivity(intent);
             return true;

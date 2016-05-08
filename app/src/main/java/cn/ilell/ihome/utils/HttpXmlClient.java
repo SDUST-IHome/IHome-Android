@@ -26,11 +26,12 @@ import java.util.Set;
  */
 public class HttpXmlClient {
     private static DefaultHttpClient httpclient;
-    private static HttpPost post;
+
     //private static Logger log = Logger.getLogger(HttpXmlClient.class);
 
     public static String post(String url, Map<String, String> params) {
-        //httpclient = new DefaultHttpClient();
+        DefaultHttpClient http = new DefaultHttpClient();
+        HttpPost post;
         String body = null;
 
         //log.info("create httppost:" + url);
@@ -38,7 +39,7 @@ public class HttpXmlClient {
 
         body = invoke(post);
 
-        //httpclient.getConnectionManager().shutdown();
+        http.getConnectionManager().shutdown();
 
         return body;
     }

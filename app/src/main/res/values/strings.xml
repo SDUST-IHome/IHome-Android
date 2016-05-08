@@ -13,6 +13,7 @@
     <string name="str_menu_msg">家庭留言板</string>
     <string name="str_menu_memo">家庭备忘录</string>
     <string name="str_menu_face">人脸识别库</string>
+    <string name="str_menu_regist">添加账户</string>
 
     <drawable name="clr_transparent_btn_normal">#99ffffff</drawable>
     <drawable name="clr_transparent_pressed">#99c6c6c6</drawable>

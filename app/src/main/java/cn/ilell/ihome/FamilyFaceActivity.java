@@ -33,6 +33,10 @@ public class FamilyFaceActivity extends BaseFamilyActivity {
             params.put("Name", edit.getText().toString());
             params.put("Type","addP");
             String result = HttpXmlClient.post(backUrl, params);
+            if (result.trim().equals("success") ) {
+                edit.setText("");
+                web.reload();
+            }
             Toast.makeText(FamilyFaceActivity.this, result, Toast.LENGTH_SHORT).show();
         }
 

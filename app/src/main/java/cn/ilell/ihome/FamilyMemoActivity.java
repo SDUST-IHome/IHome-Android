@@ -25,6 +25,8 @@ public class FamilyMemoActivity extends BaseFamilyActivity {
         Map<String, String> params = new HashMap<String, String>();
         params.put("Note", edit.getText().toString());
         String result = HttpXmlClient.post(backUrl, params);
+        if (result.equals("添加成功"))
+            edit.setText("");
         Toast.makeText(FamilyMemoActivity.this, result, Toast.LENGTH_SHORT).show();
     }
 }

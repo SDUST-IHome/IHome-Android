@@ -25,6 +25,8 @@ public class FamilyMsgActivity extends BaseFamilyActivity {
         Map<String, String> params = new HashMap<String, String>();
         params.put("Content", edit.getText().toString());
         String result = HttpXmlClient.post(backUrl, params);
+        if (result.equals("success"))
+            edit.setText("");
         Toast.makeText(FamilyMsgActivity.this, result, Toast.LENGTH_SHORT).show();
     }
 }

@@ -26,6 +26,7 @@ public class AudioClient {
 	private String ser_remote_ip = "115.159.23.237";  //static final
 	private String ser_ip = "115.159.23.237";  //static final
 	private DatagramSocket socket = null;
+	private boolean running;
 
 	//使用InetAddress(Inet4Address).getByName把IP地址转换为网络地址
 	private InetAddress serverAddress = null;
@@ -73,7 +74,7 @@ public class AudioClient {
 		ser_ip = ser_local_ip;
 		startAudioClient();
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -89,14 +90,19 @@ public class AudioClient {
 				return 1;	//connected local server
 		}
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(1500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		synchronized (this) {
 			if (currentID == 0) {
-				mThread_audio_to_sock.stop();
-				mThread_sock_to_audio.stop();
+				running = false;
+				/*try {
+					mThread_audio_to_sock.stop();
+					mThread_sock_to_audio.stop();
+				} catch (Error error) {
+					error.printStackTrace();
+				}*/
 				audioRecord.stop();
 				audioTrack.stop();
 				socket.close();
@@ -132,8 +138,19 @@ public class AudioClient {
 			Package pack = new Package();
 			byte[] buf_audio = new byte[Package.BUFLEN];
 			audioRecord.startRecording();//开始录制
+			running = true;
 			while (true) {
-				result = audioRecord.read(buf_audio, 0, Package.BUFLEN); //read from audio
+				synchronized (this) {
+					if (running == false) {
+						break;
+					}
+				}
+				try {
+					result = audioRecord.read(buf_audio, 0, Package.BUFLEN); //read from audio
+				} catch (Error error) {
+					error.printStackTrace();
+				}
+
 				if(AudioRecord.ERROR_INVALID_OPERATION != result) {
 					pack.setData(buf_audio);
 					pack.setId(pack.getId()+1);
@@ -142,10 +159,15 @@ public class AudioClient {
 					//参数一：要发送的数据  参数二：数据的长度  参数三：服务端的网络地址  参数四：服务器端端口号
 					DatagramPacket dataPacket = new DatagramPacket(pack.getPackageByte(), pack.getPackageByte().length,
 							serverAddress, ser_port);
-					try {
-						socket.send(dataPacket);
-					} catch (IOException e) {
-						e.printStackTrace();
+					synchronized (this){
+						if (socket.isClosed())
+							break;
+						try {
+							socket.send(dataPacket);
+						} catch (IOException e) {
+							e.printStackTrace();
+							break;
+						}
 					}
 				}
 			}
@@ -157,23 +179,38 @@ public class AudioClient {
 			Package pack = new Package();
 			byte[] buf_sock = new byte[Package.BUFLEN+8];
 			audioTrack.play();//开始播放
+			running = true;
 			while (true) {
+				synchronized (this) {
+					if (running == false)
+						break;
+				}
 				//参数一:要接受的data 参数二：data的长度
 				DatagramPacket packet = new DatagramPacket(buf_sock, buf_sock.length);
-				try {
-					socket.receive(packet);
-				} catch (IOException e) {
-					e.printStackTrace();
+				synchronized (this) {
+					if (socket.isClosed())
+						break;
+					try {
+						socket.receive(packet);
+					} catch (IOException e) {
+						e.printStackTrace();
+						if (running == false)
+							break;
+					}
 				}
+
 				pack.analysisBuf(buf_sock);
 				//System.out.println("sock to audio:"+pack.getId());
 				synchronized (this) {
 					if (pack.getId() > currentID) {
 						currentID = pack.getId();
-						audioTrack.write(pack.getData(),0, Package.BUFLEN);
+						try {
+							audioTrack.write(pack.getData(),0, Package.BUFLEN);
+						}catch (Error error) {
+							error.printStackTrace();
+						}
 					}
 				}
-
 			}
 		}
 	};

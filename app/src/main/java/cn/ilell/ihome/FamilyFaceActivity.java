@@ -17,6 +17,7 @@ public class FamilyFaceActivity extends BaseFamilyActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         INIT("人脸识别库","添加","例如:冷汉超");
+       // web.loadUrl("http://115.159.127.79/ihome/z-familyface.php");
         web.loadUrl("http://115.159.127.79/ihome/z-familyface.php");
         backUrl = "http://115.159.127.79/ihome/backdeal/ManageFace.php";
     }

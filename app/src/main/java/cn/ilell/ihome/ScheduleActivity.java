@@ -49,12 +49,14 @@ public class ScheduleActivity extends BaseSubPageActivity {
         listTask.add("卧室调光灯关");
         listTask.add("洗手间灯关");
         listTask.add("厨房灯关");
+        listTask.add("卧室窗帘关");
         listTask.add("客厅空调开");
         listTask.add("卧室调光灯开");
         listTask.add("客厅灯开");
         listTask.add("卧室风扇开");
         listTask.add("洗手间灯开");
         listTask.add("厨房灯开");
+        listTask.add("卧室窗帘开");
         //第二步：为下拉列表定义一个适配器，这里就用到里前面定义的list。
         ArrayAdapter<String> adapterTask;
         adapterTask = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, listTask);

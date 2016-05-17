@@ -1,6 +1,8 @@
 package cn.ilell.ihome;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,8 @@ public class ControlActivity extends BaseActivity {
 
         mContext = this;
         mClass = ControlActivity.class;
+
+        mFloatingActionButton.setImageResource(R.drawable.ic_main_voice);
     }
 
     private void initData() {
@@ -66,6 +70,9 @@ public class ControlActivity extends BaseActivity {
 
     }
 
+    public void onFloatingactionButtonClick(View v) {
+        Toast.makeText(ControlActivity.this, "语音", Toast.LENGTH_SHORT).show();
+    }   //浮动按钮单击事件
 
     @Override
     public void onDestroy() {

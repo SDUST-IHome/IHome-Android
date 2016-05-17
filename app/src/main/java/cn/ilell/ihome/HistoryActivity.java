@@ -1,6 +1,7 @@
 package cn.ilell.ihome;
 
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,8 @@ public class HistoryActivity extends BaseActivity {
 
         mContext = this;
         mClass = HistoryActivity.class;
+
+        mFloatingActionButton.setVisibility(View.INVISIBLE);
     }
 
     private void initData() {

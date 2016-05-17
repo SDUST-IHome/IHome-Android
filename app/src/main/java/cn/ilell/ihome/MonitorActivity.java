@@ -1,6 +1,7 @@
 package cn.ilell.ihome;
 
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,8 @@ public class MonitorActivity extends BaseActivity {
 
         mContext = this;
         mClass = MonitorActivity.class;
+
+        mFloatingActionButton.setVisibility(View.INVISIBLE);
     }
 
     private void initData() {

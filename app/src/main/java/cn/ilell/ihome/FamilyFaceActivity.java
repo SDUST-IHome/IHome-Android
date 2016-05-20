@@ -7,20 +7,26 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import cn.ilell.ihome.base.BaseFamilyActivity;
+import cn.ilell.ihome.utils.HttpXmlClient;
 
 
-public class FamilyFaceActivity extends AppCompatActivity {
-
+public class FamilyFaceActivity extends BaseFamilyActivity {
     private final static String TAG = "FamilyFaceActivity";
 
-    private String TMP_URL = "http://115.159.127.79/ihome/intell_recognition.php";
+    private String TMP_URL = "http://115.159.127.79/ihome/z-familyface.php";
     private WebView webview;
 
     private ValueCallback<Uri> mUploadMessage;
@@ -28,9 +34,36 @@ public class FamilyFaceActivity extends AppCompatActivity {
 
     private final static int FILECHOOSER_RESULTCODE = 1;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        INIT("人脸识别库","添加人员","例如：冷汉超");
+        backUrl = "http://115.159.127.79/ihome/backdeal/ManageFace.php";
+        assignViews();
+    }
+
+    public void onFamilyClick(View v) {
+        String name = edit.getText().toString();
+        if (name.isEmpty())
+            Toast.makeText(FamilyFaceActivity.this, "姓名不能为空", Toast.LENGTH_SHORT).show();
+        else if (name.length()>10)
+            Toast.makeText(FamilyFaceActivity.this, "姓名长度过长", Toast.LENGTH_SHORT).show();
+        else {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("Name", edit.getText().toString());
+            params.put("Type","addP");
+            String result = HttpXmlClient.post(backUrl, params);
+            if (result.trim().equals("success") ) {
+                edit.setText("");
+                web.reload();
+            }
+            Toast.makeText(FamilyFaceActivity.this, result, Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     private void assignViews() {
-        webview = (WebView) findViewById(R.id.webview);
+        webview = (WebView) findViewById(R.id.family_webView);
         WebSettings settings = webview.getSettings();
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
@@ -92,13 +125,6 @@ public class FamilyFaceActivity extends AppCompatActivity {
         });
         webview.loadUrl(TMP_URL);
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_familyface);
-        assignViews();
     }
 
     @Override

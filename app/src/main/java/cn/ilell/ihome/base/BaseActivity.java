@@ -225,7 +225,7 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                         mContext.startActivity(intent);
                         //关闭当前的
                         finish();
-                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                        overridePendingTransition(R.anim.push_left_in_quickly, R.anim.push_left_out_quickly);
                     }
                 });
             }
@@ -265,6 +265,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             intent.setClass(mContext, FamilyMsgActivity.class);
             //启动一个新的Activity
             mContext.startActivity(intent);
+            overridePendingTransition(R.anim.scale_translate,
+                    R.anim.my_alpha_action);
             return true;
         }
         else if (id == R.id.bar_menu_memo) {
@@ -273,6 +275,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             intent.setClass(mContext, FamilyMemoActivity.class);
             //启动一个新的Activity
             mContext.startActivity(intent);
+            overridePendingTransition(R.anim.push_up_in,
+                    R.anim.push_up_out);
             return true;
         }
         else if (id == R.id.bar_menu_face) {

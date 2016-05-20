@@ -144,7 +144,7 @@ public class WelcomeActivity extends Activity {
                 startActivity(intent);
                 //关闭当前的
                 finish();
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                overridePendingTransition(R.anim.push_left_in_quickly, R.anim.push_left_out_quickly);
             }
         });
     }

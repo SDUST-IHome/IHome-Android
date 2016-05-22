@@ -239,6 +239,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         intent.setClass(mContext, ScheduleActivity.class);
         //启动一个新的Activity
         startActivity(intent);
+        overridePendingTransition(R.anim.push_left_in,
+                R.anim.push_left_out);
     }   //浮动按钮单击事件
 
     public void onRoundedImageViewClick(View v) {
@@ -247,6 +249,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         intent.setClass(mContext, LoginActivity.class);
         //启动一个新的Activity
         startActivity(intent);
+        overridePendingTransition(R.anim.scale_translate,
+                R.anim.my_alpha_action);
     }   //侧边栏图片按钮单击事件
 
     @Override
@@ -265,8 +269,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             intent.setClass(mContext, FamilyMsgActivity.class);
             //启动一个新的Activity
             mContext.startActivity(intent);
-            overridePendingTransition(R.anim.scale_translate,
-                    R.anim.my_alpha_action);
+            overridePendingTransition(R.anim.push_left_in,
+                    R.anim.push_left_out);
             return true;
         }
         else if (id == R.id.bar_menu_memo) {
@@ -275,8 +279,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             intent.setClass(mContext, FamilyMemoActivity.class);
             //启动一个新的Activity
             mContext.startActivity(intent);
-            overridePendingTransition(R.anim.push_up_in,
-                    R.anim.push_up_out);
+            overridePendingTransition(R.anim.push_left_in,
+                    R.anim.push_left_out);
             return true;
         }
         else if (id == R.id.bar_menu_face) {
@@ -285,6 +289,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             intent.setClass(mContext, FamilyFaceActivity.class);
             //启动一个新的Activity
             mContext.startActivity(intent);
+            overridePendingTransition(R.anim.push_left_in,
+                    R.anim.push_left_out);
             return true;
         }
         else if (id == R.id.bar_menu_regist) {
@@ -293,6 +299,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             intent.setClass(mContext, RegistActivity.class);
             //启动一个新的Activity
             mContext.startActivity(intent);
+            overridePendingTransition(R.anim.push_left_in,
+                    R.anim.push_left_out);
             return true;
         }
 

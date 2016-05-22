@@ -59,17 +59,19 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        //设置状态栏的颜色
+        StatusBarCompat.compat(this, getResources().getColor(R.color.main_white));
         mContext = this;
         initViewAndListener();
 
-        SharedPreferences data_local = getSharedPreferences("IHomeAccount", 0);
-        user = data_local.getString("user","");
-        pwd = data_local.getString("password","");
-        url = "http://115.159.127.79/ihome/backdeal_mobile/CheckLogin.php?Username="+
-                user+"&Password="+pwd;
         Thread t = new Thread(new Runnable(){
             public void run(){
                 try {
+                    SharedPreferences data_local = getSharedPreferences("IHomeAccount", 0);
+                    user = data_local.getString("user","");
+                    pwd = data_local.getString("password","");
+                    url = "http://115.159.127.79/ihome/backdeal_mobile/CheckLogin.php?Username="+
+                            user+"&Password="+pwd;
                     HttpXmlClient.httpclient = new DefaultHttpClient(); //初始化http
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -129,8 +131,6 @@ public class WelcomeActivity extends Activity {
     }
 
     private void initViewAndListener() {
-        //设置状态栏的颜色
-        StatusBarCompat.compat(this, getResources().getColor(R.color.main_white));
         web = (WebView) findViewById(R.id.webView);
         web.setVisibility(View.INVISIBLE);
         WebSettings settings = web.getSettings();
@@ -152,9 +152,10 @@ public class WelcomeActivity extends Activity {
                 intent.setClass(WelcomeActivity.this, StateActivity.class);
                 //启动一个新的Activity
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,
+                        R.anim.push_up_out);
                 //关闭当前的
                 finish();
-                overridePendingTransition(R.anim.push_left_in_quickly, R.anim.push_left_out_quickly);
             }
         });
     }

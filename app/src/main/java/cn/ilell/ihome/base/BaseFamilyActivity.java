@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import cn.ilell.ihome.R;
+import cn.ilell.ihome.view.StatusBarCompat;
 
 /**
  * Created by lhc35 on 2016/5/6.
@@ -27,6 +28,8 @@ public class BaseFamilyActivity extends Activity{
     protected void INIT(String title,String btn_text,String edit_hint) {
         setContentView(R.layout.activity_family);
         mContext = this;
+        //设置状态栏的颜色
+        StatusBarCompat.compat(this, getResources().getColor(R.color.main_blue_light));
         TextView title_name = (TextView) findViewById(R.id.title_bar_name);
         title_name.setText(title);	//修改页面标题
         btn = (Button) findViewById(R.id.family_button);

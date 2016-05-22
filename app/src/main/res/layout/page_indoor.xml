@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="4">
 
-    <Button
+
+
+
+    <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/indoor_button"
-        android:layout_gravity="center_horizontal" />
+        android:text="室内监控"
+        android:textSize="20dp"
+        android:textOn="室内监控已开启"
+        android:textOff="室内监控未开启"
+        android:id="@+id/outdoor_switch" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="indoor"
-        android:id="@+id/indoor_textView"
-        android:layout_gravity="center_horizontal" />
+    <WebView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webView" />
+
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import cn.ilell.ihome.R;
+import cn.ilell.ihome.view.StatusBarCompat;
 
 /**
  * Created by lhc35 on 2016/5/1.
@@ -16,6 +17,8 @@ public class BaseSubPageActivity extends Activity implements View.OnClickListene
     protected void INIT(int pageid,String title) {
         setContentView(pageid);
         mContext = this;
+        //设置状态栏的颜色
+        StatusBarCompat.compat(this, getResources().getColor(R.color.main_blue_light));
         TextView title_name = (TextView) findViewById(R.id.title_bar_name);
         title_name.setText(title);	//修改页面标题
     }   //初始化

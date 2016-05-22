@@ -1,5 +1,6 @@
 package cn.ilell.ihome.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.base.BaseFragment;
@@ -64,9 +66,16 @@ public class OutdoorFragment extends BaseFragment{
                     new Thread(){
                         public void run(){
                             int result = audioClient.autoStart();
-                            /*Toast.makeText(mContext, result+"", Toast.LENGTH_SHORT).show();
-                            if (result == 0)
-                                Toast.makeText(mContext, "无音频信号", Toast.LENGTH_SHORT).show();*/
+                            if (result == 0) {
+                                ((Activity)mContext).runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mContext, "服务器未响应", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
                         }
                     }.start();
                 } else {// 关闭

@@ -42,23 +42,23 @@ public class IndoorFragment extends BaseFragment{
     }
 
     protected void initView() {
-        btn = (Button) mView.findViewById(R.id.indoor_button);
-        text = (TextView) mView.findViewById(R.id.indoor_textView);
+        //btn = (Button) mView.findViewById(R.id.indoor_button);
+        //text = (TextView) mView.findViewById(R.id.indoor_textView);
     }
 
     private void setListener() {
-        btn.setOnClickListener(this);
+        //btn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.indoor_button:
+            /*case R.id.indoor_button:
 
                 //do something
                 text.setText("123");
-                break;
+                break;*/
 
            /* case R.id. myButton2:
 

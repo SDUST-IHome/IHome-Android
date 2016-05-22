@@ -99,6 +99,10 @@ public class MsgService extends MyService {
                     else if (data[2].equals("1")) { //火警提醒
                         showCzNotify("火灾警报","传感器检测到您的家中存在较高浓度的有害气体");
                     }
+                    else {
+                        //showCzNotify("12123","传感器检测到您的家中存在较高浓度的有害气体");
+                        showIntentActivityNotify("设备操作错误",data[2], MonitorActivity.class);
+                    }
                 }
             }
             else if (data[0].equals("1")) {   //用户级消息

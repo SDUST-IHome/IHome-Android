@@ -2,6 +2,7 @@ package cn.ilell.ihome;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import cn.ilell.ihome.base.BaseData;
 import cn.ilell.ihome.service.MsgService;
 import cn.ilell.ihome.service.OnProgressListener;
 import cn.ilell.ihome.utils.HttpXmlClient;
+import cn.ilell.ihome.view.StatusBarCompat;
 
 /**
  * Created by lhc35 on 2016/5/1.
@@ -26,7 +28,7 @@ import cn.ilell.ihome.utils.HttpXmlClient;
 public class WelcomeActivity extends Activity {
     private WebView web;
     String user,pwd,url;
-
+    Context mContext;
     //服务
     private MsgService msgService;
     private ServiceConnection conn = new ServiceConnection() {
@@ -57,9 +59,7 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
-        HttpXmlClient.httpclient = new DefaultHttpClient(); //初始化http
-
+        mContext = this;
         initViewAndListener();
 
         SharedPreferences data_local = getSharedPreferences("IHomeAccount", 0);
@@ -70,6 +70,7 @@ public class WelcomeActivity extends Activity {
         Thread t = new Thread(new Runnable(){
             public void run(){
                 try {
+                    HttpXmlClient.httpclient = new DefaultHttpClient(); //初始化http
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -102,7 +103,14 @@ public class WelcomeActivity extends Activity {
                 return true;
             }
             else
-                Toast.makeText(WelcomeActivity.this, result, Toast.LENGTH_SHORT).show();
+            {
+                WelcomeActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(WelcomeActivity.this, "网络连接失败，请检查网络设置", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
         /*Intent intent = new Intent();
         ///制定intent要启动的类
@@ -121,6 +129,8 @@ public class WelcomeActivity extends Activity {
     }
 
     private void initViewAndListener() {
+        //设置状态栏的颜色
+        StatusBarCompat.compat(this, getResources().getColor(R.color.main_white));
         web = (WebView) findViewById(R.id.webView);
         web.setVisibility(View.INVISIBLE);
         WebSettings settings = web.getSettings();

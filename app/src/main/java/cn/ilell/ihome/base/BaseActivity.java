@@ -39,6 +39,7 @@ import cn.ilell.ihome.service.MsgService;
 import cn.ilell.ihome.service.OnProgressListener;
 import cn.ilell.ihome.utils.SnackbarUtil;
 import cn.ilell.ihome.view.RoundedImageView;
+import cn.ilell.ihome.view.StatusBarCompat;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
@@ -123,7 +124,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     protected void configViews() {
-
+        //设置状态栏的颜色
+        StatusBarCompat.compat(this, getResources().getColor(R.color.main_blue_light));
         // 设置显示Toolbar
         setSupportActionBar(mToolbar);
 

@@ -26,16 +26,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="7">
+                android:orientation="vertical">
                 <EditText
                     android:id="@+id/regist_text_user"
                     android:background="@color/color_btn_white"
-                    android:drawableLeft="@drawable/user"
+                    android:drawableLeft="@drawable/ic_regedit_user"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="7px"
-                    android:layout_weight="1"
                     android:singleLine="true"
                     android:hint="用户名"
                     android:textColor="#000"/>
@@ -43,33 +41,30 @@
                 <EditText
                     android:id="@+id/regist_text_name"
                     android:background="@color/color_btn_white"
-                    android:drawableLeft="@drawable/pwd"
+                    android:drawableLeft="@drawable/ic_regedit_name"
                     android:layout_marginTop="7px"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="50dp"
                     android:singleLine="true"
                     android:hint="姓名"
                     android:textColor="#000"/>
                 <EditText
                     android:id="@+id/regist_text_phone"
                     android:background="@color/color_btn_white"
-                    android:drawableLeft="@drawable/pwd"
+                    android:drawableLeft="@drawable/ic_regedit_phone"
                     android:layout_marginTop="7px"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="50dp"
                     android:singleLine="true"
                     android:hint="手机号"
                     android:textColor="#000"/>
                 <EditText
                     android:id="@+id/regist_text_pwd"
                     android:background="@color/color_btn_white"
-                    android:drawableLeft="@drawable/pwd"
+                    android:drawableLeft="@drawable/ic_regedit_pwd"
                     android:layout_marginTop="7px"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="50dp"
                     android:singleLine="true"
                     android:inputType="textPassword"
                     android:hint="密码"
@@ -77,11 +72,10 @@
                 <EditText
                     android:id="@+id/regist_text_pwdenter"
                     android:background="@color/color_btn_white"
-                    android:drawableLeft="@drawable/pwd"
+                    android:drawableLeft="@drawable/ic_regedit_pwd"
                     android:layout_marginTop="7px"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="50dp"
                     android:singleLine="true"
                     android:inputType="textPassword"
                     android:hint="确认密码"
@@ -92,8 +86,7 @@
                     android:textColor="@color/color_btn_text"
                     android:textSize="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="50dp"
                     android:text="创建账户"
                     android:layout_marginTop="16px"
 

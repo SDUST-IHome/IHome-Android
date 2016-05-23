@@ -11,9 +11,11 @@ import cn.ilell.ihome.fragment.BedroomFragment;
 import cn.ilell.ihome.fragment.KitchenFragment;
 import cn.ilell.ihome.fragment.ParlorFragment;
 import cn.ilell.ihome.fragment.ToiletFragment;
+import cn.ilell.ihome.utils.OperatingCommand;
 
 public class ControlActivity extends BaseActivity {
 
+    private OperatingCommand operatingCommand;  //语音操作指令处理
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,7 @@ public class ControlActivity extends BaseActivity {
         mClass = ControlActivity.class;
 
         mFloatingActionButton.setImageResource(R.drawable.ic_main_voice);
+        operatingCommand = new OperatingCommand();
     }
 
     private void initData() {
@@ -71,7 +74,8 @@ public class ControlActivity extends BaseActivity {
     }
 
     public void onFloatingactionButtonClick(View v) {
-        Toast.makeText(ControlActivity.this, "语音", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(ControlActivity.this, operatingCommand.dealCommand("打开客厅灯"), Toast.LENGTH_SHORT).show();
     }   //浮动按钮单击事件
 
     @Override

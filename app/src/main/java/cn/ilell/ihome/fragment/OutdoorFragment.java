@@ -21,7 +21,7 @@ public class OutdoorFragment extends BaseFragment{
 
     private Switch switch_all = null;
 
-    private AudioClient audioClient = null;
+    public static AudioClient audioClient = null;
 
     @Nullable
     @Override

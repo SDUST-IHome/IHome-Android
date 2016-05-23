@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.base.BaseFragment;
@@ -16,8 +16,7 @@ import cn.ilell.ihome.base.BaseFragment;
  */
 public class IndoorFragment extends BaseFragment{
 
-    private Button btn;
-    private TextView text;
+    private Switch switch_all = null;
 
     @Nullable
     @Override
@@ -30,40 +29,45 @@ public class IndoorFragment extends BaseFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.indoor_swiperefreshlayout);
-
-
-        // 刷新时，指示器旋转后变化的颜色
-        //mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
-        //mSwipeRefreshLayout.setOnRefreshListener(this);
-
-        initView();
+        initViewThis();
         setListener();
+
     }
 
-    protected void initView() {
-        //btn = (Button) mView.findViewById(R.id.indoor_button);
-        //text = (TextView) mView.findViewById(R.id.indoor_textView);
+    /*public void onPause() {
+        audioClient.stop();
+    }*/
+    /**
+     * 调用finish方法时，这方法将被激发
+     * 设置输入流为空，调用父类的onDestroy销毁资源
+     */
+
+    protected void initViewThis() {
+        initView();
+        switch_all = (Switch) mView.findViewById(R.id.outdoor_switch);
     }
 
     private void setListener() {
-        //btn.setOnClickListener(this);
+        switch_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                // TODO Auto-generated method stub
+                if (isChecked) {//打开
+                    web.loadUrl("http://115.159.127.79/ihome/backdeal/VideoForPhone.php");
+                } else {// 关闭
+                    web.loadUrl("about:blank");
+                }
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
-            /*case R.id.indoor_button:
-
-                //do something
-                text.setText("123");
-                break;*/
-
-           /* case R.id. myButton2:
-
-                //do something
-
+           /* case R.id.outdoor_btn_stop:
                 break;*/
 
         }

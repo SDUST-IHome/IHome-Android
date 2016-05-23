@@ -195,10 +195,8 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                 // Menu item点击后选中，并关闭Drawerlayout
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
-
                 // android-support-design兼容包中新添加的一个类似Toast的控件。
                 //SnackbarUtil.show(mViewPager, msgString, 0);
-
                 return true;
             }
         });
@@ -305,7 +303,6 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                     R.anim.push_left_out);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

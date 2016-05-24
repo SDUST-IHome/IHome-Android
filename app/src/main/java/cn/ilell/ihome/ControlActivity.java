@@ -4,7 +4,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.RecognizerResult;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.ui.RecognizerDialog;
+import com.iflytek.cloud.ui.RecognizerDialogListener;
+import com.iflytek.sunflower.FlowerCollector;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.BedroomFragment;
@@ -14,6 +29,16 @@ import cn.ilell.ihome.fragment.ToiletFragment;
 import cn.ilell.ihome.utils.OperatingCommand;
 
 public class ControlActivity extends BaseActivity {
+
+    //语音识别部分
+    private static String TAG = ControlActivity.class.getSimpleName();
+    // 语音听写UI
+    private RecognizerDialog mIatDialog;
+    // 用HashMap存储听写结果
+    private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
+    int ret = 0; // 函数调用返回值
+    //语音识别部分
+
 
     private OperatingCommand operatingCommand;  //语音操作指令处理
     @Override
@@ -38,6 +63,10 @@ public class ControlActivity extends BaseActivity {
 
         mFloatingActionButton.setImageResource(R.drawable.ic_main_voice);
         operatingCommand = new OperatingCommand();
+
+        //语音识别部分
+        SpeechUtility.createUtility(ControlActivity.this, "appid=573f022f");
+        mIatDialog = new RecognizerDialog(ControlActivity.this, mInitListener);
     }
 
     private void initData() {
@@ -74,9 +103,62 @@ public class ControlActivity extends BaseActivity {
     }
 
     public void onFloatingactionButtonClick(View v) {
-
-        Toast.makeText(ControlActivity.this, operatingCommand.dealCommand("打开客厅灯"), Toast.LENGTH_SHORT).show();
+        // 移动数据分析，收集开始听写事件
+        FlowerCollector.onEvent(ControlActivity.this, "iat_recognize");
+        mIatResults.clear();
+        mIatDialog.setParameter(SpeechConstant.ASR_PTT, "0");
+        mIatDialog.setListener(mRecognizerDialogListener);
+        mIatDialog.show();
     }   //浮动按钮单击事件
+
+    /**
+     * 初始化监听器。
+     */
+    private InitListener mInitListener = new InitListener() {
+        @Override
+        public void onInit(int code) {
+            if (code != ErrorCode.SUCCESS) {
+                Toast.makeText(ControlActivity.this, "初始化失败，错误码：" + code, Toast.LENGTH_LONG ).show();
+            }
+        }
+    };
+    //打印结果
+    private void printResult(RecognizerResult results) {
+        String text = JsonParser.parseIatResult(results.getResultString());
+
+        String sn = null;
+        // 读取json结果中的sn字段
+        try {
+            JSONObject resultJson = new JSONObject(results.getResultString());
+            sn = resultJson.optString("sn");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mIatResults.put(sn, text);
+
+        StringBuffer resultBuffer = new StringBuffer();
+        for (String key : mIatResults.keySet()) {
+            resultBuffer.append(mIatResults.get(key));
+        }
+        Toast.makeText(ControlActivity.this, resultBuffer.toString(), Toast.LENGTH_LONG ).show();
+    }
+
+    /**
+     * 听写UI监听器
+     */
+    private RecognizerDialogListener mRecognizerDialogListener = new RecognizerDialogListener() {
+        public void onResult(RecognizerResult results, boolean isLast) {
+            printResult(results);
+        }
+
+        /**
+         * 识别回调错误.
+         */
+        public void onError(SpeechError error) {
+            Toast.makeText(ControlActivity.this,error.getPlainDescription(true), Toast.LENGTH_LONG ).show();
+        }
+    };
 
     @Override
     public void onDestroy() {
@@ -84,5 +166,17 @@ public class ControlActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    protected void onResume() {
+        // 开放统计 移动数据统计分析
+        FlowerCollector.onResume(ControlActivity.this);
+        FlowerCollector.onPageStart(TAG);
+        super.onResume();
+    }
 
+    protected void onPause() {
+        // 开放统计 移动数据统计分析
+        FlowerCollector.onPageEnd(TAG);
+        FlowerCollector.onPause(ControlActivity.this);
+        super.onPause();
+    }
 }

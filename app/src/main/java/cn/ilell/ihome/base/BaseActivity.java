@@ -20,7 +20,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.RecognizerResult;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.ui.RecognizerDialog;
+import com.iflytek.cloud.ui.RecognizerDialogListener;
+import com.iflytek.sunflower.FlowerCollector;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import cn.ilell.ihome.ControlActivity;
@@ -37,6 +53,8 @@ import cn.ilell.ihome.StateActivity;
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
 import cn.ilell.ihome.service.MsgService;
 import cn.ilell.ihome.service.OnProgressListener;
+import cn.ilell.ihome.utils.JsonParser;
+import cn.ilell.ihome.utils.OperatingCommand;
 import cn.ilell.ihome.utils.SnackbarUtil;
 import cn.ilell.ihome.view.RoundedImageView;
 import cn.ilell.ihome.view.StatusBarCompat;
@@ -47,6 +65,17 @@ import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
  * Created by lhc35 on 2016/4/13.
  */
 public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+    //语音识别部分
+    private static String TAG = ControlActivity.class.getSimpleName();
+    // 语音听写UI
+    private RecognizerDialog mIatDialog;
+    // 用HashMap存储听写结果
+    private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
+    int ret = 0; // 函数调用返回值
+    //语音识别部分
+
+    private OperatingCommand operatingCommand;  //语音操作指令处理
+
     //服务
     protected MsgService msgService;
 
@@ -92,6 +121,57 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                 }
             });
 
+        }
+    };
+
+    /**
+     * 初始化监听器。
+     */
+    private InitListener mInitListener = new InitListener() {
+        @Override
+        public void onInit(int code) {
+            if (code != ErrorCode.SUCCESS) {
+                Toast.makeText(BaseActivity.this, "初始化失败，错误码：" + code, Toast.LENGTH_LONG ).show();
+            }
+        }
+    };
+    //打印结果
+    private void printResult(RecognizerResult results) {
+        String text = JsonParser.parseIatResult(results.getResultString());
+
+        String sn = null;
+        // 读取json结果中的sn字段
+        try {
+            JSONObject resultJson = new JSONObject(results.getResultString());
+            sn = resultJson.optString("sn");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mIatResults.put(sn, text);
+
+        StringBuffer resultBuffer = new StringBuffer();
+        for (String key : mIatResults.keySet()) {
+            resultBuffer.append(mIatResults.get(key));
+        }
+
+        Toast.makeText(BaseActivity.this, operatingCommand.dealCommand(resultBuffer.toString()), Toast.LENGTH_LONG ).show();
+    }
+
+    /**
+     * 听写UI监听器
+     */
+    private RecognizerDialogListener mRecognizerDialogListener = new RecognizerDialogListener() {
+        public void onResult(RecognizerResult results, boolean isLast) {
+            if (!isLast)
+                printResult(results);
+        }
+
+        /**
+         * 识别回调错误.
+         */
+        public void onError(SpeechError error) {
+            Toast.makeText(BaseActivity.this,error.getPlainDescription(true), Toast.LENGTH_LONG ).show();
         }
     };
 
@@ -159,6 +239,12 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         //设置侧边栏头部显示
         initNavHead();
+
+        operatingCommand = new OperatingCommand();
+
+        //语音识别部分
+        SpeechUtility.createUtility(BaseActivity.this, "appid=573f022f");
+        mIatDialog = new RecognizerDialog(BaseActivity.this, mInitListener);
     }
 
     /**
@@ -233,14 +319,12 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     public void onFloatingactionButtonClick(View v) {
-        //SnackbarUtil.show(v, getString(R.string.plusone), 0);
-        Intent intent = new Intent();
-        //制定intent要启动的类
-        intent.setClass(mContext, ScheduleActivity.class);
-        //启动一个新的Activity
-        startActivity(intent);
-        overridePendingTransition(R.anim.push_left_in,
-                R.anim.push_left_out);
+        // 移动数据分析，收集开始听写事件
+        FlowerCollector.onEvent(BaseActivity.this, "iat_recognize");
+        mIatResults.clear();
+        mIatDialog.setParameter(SpeechConstant.ASR_PTT, "0");
+        mIatDialog.setListener(mRecognizerDialogListener);
+        mIatDialog.show();
     }   //浮动按钮单击事件
 
     public void onRoundedImageViewClick(View v) {
@@ -303,6 +387,16 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                     R.anim.push_left_out);
             return true;
         }
+        else if (id == R.id.bar_menu_schedule) {
+            Intent intent = new Intent();
+            //制定intent要启动的类
+            intent.setClass(mContext, ScheduleActivity.class);
+            //启动一个新的Activity
+            startActivity(intent);
+            overridePendingTransition(R.anim.push_left_in,
+                R.anim.push_left_out);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -324,5 +418,19 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onClick(View v) {
 
+    }
+
+    protected void onResume() {
+        // 开放统计 移动数据统计分析
+        FlowerCollector.onResume(BaseActivity.this);
+        FlowerCollector.onPageStart(TAG);
+        super.onResume();
+    }
+
+    protected void onPause() {
+        // 开放统计 移动数据统计分析
+        FlowerCollector.onPageEnd(TAG);
+        FlowerCollector.onPause(BaseActivity.this);
+        super.onPause();
     }
 }

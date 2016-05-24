@@ -4,6 +4,7 @@
     <item android:id="@+id/bar_menu_msg" android:title="@string/str_menu_msg"></item>
     <item android:id="@+id/bar_menu_memo" android:title="@string/str_menu_memo"></item>
     <item android:id="@+id/bar_menu_face" android:title="@string/str_menu_face"></item>
+    <item android:id="@+id/bar_menu_schedule" android:title="@string/str_menu_schedule"></item>
     <item android:id="@+id/bar_menu_regist" android:title="@string/str_menu_regist"></item>
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

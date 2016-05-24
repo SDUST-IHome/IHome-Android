@@ -21,6 +21,18 @@ android {
     }
 }
 
+task nativeLibsToJar(type: Zip, description: 'create a jar archive of the native libs') {
+    destinationDir file("$buildDir/native-libs")//打包的目标目录
+    baseName 'native-libs'//jar的文件名
+    extension 'jar'
+    from fileTree(dir: 'libs', include: '**/*.so')
+into 'lib/'
+}
+
+tasks.withType(JavaCompile) {
+compileTask -> compileTask.dependsOn(nativeLibsToJar)
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.0'
@@ -28,4 +40,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile files('src/main/libs/Msc.jar')
+    compile files('src/main/libs/Sunflower.jar')
 }

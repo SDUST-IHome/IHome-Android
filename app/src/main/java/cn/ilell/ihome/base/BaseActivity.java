@@ -45,6 +45,7 @@ import cn.ilell.ihome.FamilyMemoActivity;
 import cn.ilell.ihome.FamilyMsgActivity;
 import cn.ilell.ihome.HistoryActivity;
 import cn.ilell.ihome.LoginActivity;
+import cn.ilell.ihome.MediaActivity;
 import cn.ilell.ihome.MonitorActivity;
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.RegistActivity;
@@ -275,6 +276,10 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                     case R.id.nav_menu_monitor:
                         if (mClass != MonitorActivity.class)
                             changeActivity(MonitorActivity.class);
+                        break;
+                    case R.id.nav_menu_media:
+                        if (mClass != MediaActivity.class)
+                            changeActivity(MediaActivity.class);
                         break;
                 }
 

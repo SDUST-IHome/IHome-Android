@@ -54,6 +54,8 @@ public class OperatingCommand {
     }
 
     public String dealCommand(String comnd) {
+        if (!comMap.containsKey(comnd))
+            return "无法识别的操作指令";
         String result,comvalue;
         comvalue = comMap.get(comnd);
         String[] com = comvalue.split(";");

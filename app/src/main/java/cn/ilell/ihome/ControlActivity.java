@@ -39,6 +39,7 @@ public class ControlActivity extends BaseActivity {
     int ret = 0; // 函数调用返回值
     //语音识别部分
 
+    int test = 0;
 
     private OperatingCommand operatingCommand;  //语音操作指令处理
     @Override
@@ -141,7 +142,8 @@ public class ControlActivity extends BaseActivity {
         for (String key : mIatResults.keySet()) {
             resultBuffer.append(mIatResults.get(key));
         }
-        Toast.makeText(ControlActivity.this, resultBuffer.toString(), Toast.LENGTH_LONG ).show();
+
+        Toast.makeText(ControlActivity.this, operatingCommand.dealCommand(resultBuffer.toString()), Toast.LENGTH_LONG ).show();
     }
 
     /**
@@ -149,7 +151,8 @@ public class ControlActivity extends BaseActivity {
      */
     private RecognizerDialogListener mRecognizerDialogListener = new RecognizerDialogListener() {
         public void onResult(RecognizerResult results, boolean isLast) {
-            printResult(results);
+            if (!isLast)
+                printResult(results);
         }
 
         /**

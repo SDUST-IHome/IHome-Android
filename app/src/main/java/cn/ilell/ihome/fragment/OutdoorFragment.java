@@ -36,7 +36,7 @@ public class OutdoorFragment extends BaseFragment{
 
         initViewThis();
         setListener();
-
+        audioClient = new AudioClient();
     }
 
     /*public void onPause() {
@@ -62,7 +62,6 @@ public class OutdoorFragment extends BaseFragment{
                 // TODO Auto-generated method stub
                 if (isChecked) {//打开
                     web.loadUrl("http://115.159.127.79/ihome/backdeal/VideoForPhone.php");
-                    audioClient = new AudioClient();
                     new Thread(){
                         public void run(){
                             int result = audioClient.autoStart();

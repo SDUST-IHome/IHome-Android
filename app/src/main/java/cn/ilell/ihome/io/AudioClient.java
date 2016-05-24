@@ -235,9 +235,13 @@ public class AudioClient {
 	}	//创建放音
 
 	public void stop() {
-		audioRecord.stop();
-		audioTrack.stop();
-		socket.close();
+		synchronized (this) {
+			if (running){
+				audioRecord.stop();
+				audioTrack.stop();
+				socket.close();
+			}
+		}
 	}
 
 }

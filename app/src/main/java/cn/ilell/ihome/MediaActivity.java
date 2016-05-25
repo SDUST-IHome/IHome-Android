@@ -5,8 +5,8 @@ import android.os.Bundle;
 import java.util.ArrayList;
 
 import cn.ilell.ihome.base.BaseActivity;
-import cn.ilell.ihome.fragment.IndoorFragment;
-import cn.ilell.ihome.fragment.OutdoorFragment;
+import cn.ilell.ihome.fragment.DownloadFragment;
+import cn.ilell.ihome.fragment.MediaFragment;
 
 public class MediaActivity extends BaseActivity {
 
@@ -36,22 +36,22 @@ public class MediaActivity extends BaseActivity {
     private void initData() {
 
         // Tab的标题采用string-array的方法保存，在res/values/arrays.xml中写
-        mTitles = getResources().getStringArray(R.array.monitor_tab_titles);
+        mTitles = getResources().getStringArray(R.array.media_tab_titles);
 
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
 
-        Bundle outdoorBundle = new Bundle();
-        outdoorBundle.putInt("flag", 0);
-        OutdoorFragment outdoorFragment = new OutdoorFragment();
-        outdoorFragment.setArguments(outdoorBundle);
-        mFragments.add(0, outdoorFragment);
+        Bundle mediaBundle = new Bundle();
+        mediaBundle.putInt("flag", 0);
+        MediaFragment mediaFragment = new MediaFragment();
+        mediaFragment.setArguments(mediaBundle);
+        mFragments.add(0, mediaFragment);
 
-        Bundle indoorBundle = new Bundle();
-        indoorBundle.putInt("flag", 1);
-        IndoorFragment indoorFragment = new IndoorFragment();
-        indoorFragment.setArguments(indoorBundle);
-        mFragments.add(1, indoorFragment);
+        Bundle downloadBundle = new Bundle();
+        downloadBundle.putInt("flag", 1);
+        DownloadFragment downloadFragment = new DownloadFragment();
+        downloadFragment.setArguments(downloadBundle);
+        mFragments.add(1, downloadFragment);
 
     }
     @Override

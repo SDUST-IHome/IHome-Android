@@ -92,17 +92,24 @@ public class MsgService extends MyService {
             super.handleMessage(msg);
             String[] data = recvMsg.split("/");
             if (data[0].equals("0")) {    //网关级消息
-                if (data[1].equals("4")) {  //火警
+                if (data[1].equals("4")) {  //警报
                     if (data[2].equals("0")) {  //取消火警
                         mNotificationManager.cancel(notifyId_WARNING);//删除一个特定的通知ID对应的通知
                     }
                     else if (data[2].equals("1")) { //火警提醒
                         showCzNotify("火灾警报","传感器检测到您的家中存在较高浓度的有害气体");
                     }
+                    else if (data[2].equals("2")) { //取消闯入报警
+                        mNotificationManager.cancel(notifyId_WARNING);//删除一个特定的通知ID对应的通知
+                    }
+                    else if (data[2].equals("3")) { //闯入报警
+                        showCzNotify("有人闯入","发现有人非法闯入，点击查看室内监控");
+                    }
                     else {
                         //showCzNotify("12123","传感器检测到您的家中存在较高浓度的有害气体");
                         showIntentActivityNotify("设备操作错误",data[2], MonitorActivity.class);
                     }
+
                 }
             }
             else if (data[0].equals("1")) {   //用户级消息

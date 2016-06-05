@@ -35,7 +35,7 @@ public class MediaFragment extends BaseFragment{
         initView();
         setListener();
 
-        web.loadUrl("http://115.159.127.79/ihome/media.php");
+        web.loadUrl("http://115.159.127.79/ihome/z-media.php");
     }
 
 

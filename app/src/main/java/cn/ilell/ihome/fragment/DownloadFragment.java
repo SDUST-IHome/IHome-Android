@@ -45,7 +45,7 @@ public class DownloadFragment extends BaseFragment{
         initView();
         setListener();
 
-        web.loadUrl("http://115.159.127.79/ihome/media.php");
+        web.loadUrl("http://115.159.127.79/ihome/z-download.php");
     }
 
 
@@ -60,13 +60,8 @@ public class DownloadFragment extends BaseFragment{
             case R.id.download_button:
 
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Name", edit_url.getText().toString());
-                //params.put("Type","addP");
-                String result = HttpXmlClient.post("https://www.baidu.com/", params);
-                if (result.trim().equals("success") ) {
-                    edit_url.setText("");
-                    web.reload();
-                }
+                params.put("data", "1"+edit_url.getText().toString());
+                String result = HttpXmlClient.post("http://115.159.127.79/ihome/backdeal/ManageDownload.php", params);
                 Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
 
                 break;

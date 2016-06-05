@@ -53,7 +53,7 @@ public class MsgService extends MyService {
 
             socketIn = new DataInputStream(serviceSocket.getInputStream());
             socketOut = new DataOutputStream(serviceSocket.getOutputStream());
-            sendMsg("Phone");
+            sendMsg("1/0/Phone");
             Thread mThread = new Thread(mRunable);
             mThread.start();
         } catch (UnknownHostException e) {

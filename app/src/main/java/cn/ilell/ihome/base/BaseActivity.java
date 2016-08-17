@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -66,6 +67,7 @@ import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
  * Created by lhc35 on 2016/4/13.
  */
 public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+
     //语音识别部分
     private static String TAG = ControlActivity.class.getSimpleName();
     // 语音听写UI
@@ -117,6 +119,10 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                 @Override
                 public void onProgress(String recvMsg) {
                     SnackbarUtil.show(findViewById(R.id.main_floatingactionbutton), recvMsg, 0);
+                    if (recvMsg.equals("0/4/6") && mClass.equals(MonitorActivity.class)) {
+                        //关闭楼宇对讲
+                        finish();
+                    }
                     /*TextView textView = (TextView) findViewById(R.id.main_textView);
                     textView.setText(recvMsg);*/
                 }
@@ -312,6 +318,12 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                         Intent intent = new Intent();
                         //制定intent要启动的类
                         intent.setClass(mContext, orderClass);
+                        if (orderClass.equals(MonitorActivity.class)) {
+                            //传参设置不响铃
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean("Ring",false);
+                            intent.putExtras(bundle);
+                        }
                         //启动一个新的Activity
                         mContext.startActivity(intent);
                         //关闭当前的

@@ -44,7 +44,7 @@ public class IndoorFragment extends BaseFragment{
 
     protected void initViewThis() {
         initView();
-        switch_all = (Switch) mView.findViewById(R.id.outdoor_switch);
+        switch_all = (Switch) mView.findViewById(R.id.indoor_switch);
     }
 
     private void setListener() {

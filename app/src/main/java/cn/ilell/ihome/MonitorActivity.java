@@ -9,11 +9,15 @@ import cn.ilell.ihome.fragment.IndoorFragment;
 import cn.ilell.ihome.fragment.OutdoorFragment;
 
 public class MonitorActivity extends BaseActivity {
-
+    //楼宇对讲是否响铃
+    public boolean ring = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Bundle bundle = this.getIntent().getExtras();
+        ring = bundle.getBoolean("Ring",false);
 
         // 初始化各种控件
         initViews();
@@ -43,6 +47,7 @@ public class MonitorActivity extends BaseActivity {
 
         Bundle outdoorBundle = new Bundle();
         outdoorBundle.putInt("flag", 0);
+        outdoorBundle.putBoolean("Ring",ring);
         OutdoorFragment outdoorFragment = new OutdoorFragment();
         outdoorFragment.setArguments(outdoorBundle);
         mFragments.add(0, outdoorFragment);
@@ -58,6 +63,8 @@ public class MonitorActivity extends BaseActivity {
     public void onDestroy() {
         unbindService(conn);
         OutdoorFragment.audioClient.stop();
+        if (OutdoorFragment.mMediaPlayer != null)
+            OutdoorFragment.mMediaPlayer.stop();
         super.onDestroy();
     }
 

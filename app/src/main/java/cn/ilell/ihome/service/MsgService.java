@@ -1,7 +1,11 @@
 package cn.ilell.ihome.service;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
@@ -104,6 +108,14 @@ public class MsgService extends MyService {
                     }
                     else if (data[2].equals("3")) { //闯入报警
                         showCzNotify("有人闯入","发现有人非法闯入，点击查看室内监控");
+                    }
+                    else if (data[2].equals("5")) { //触摸通知
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("Ring",true);
+                        Intent it =new Intent(getApplicationContext(),MonitorActivity.class);
+                        it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        it.putExtras(bundle);
+                        startActivity(it);
                     }
                     else {
                         //showCzNotify("12123","传感器检测到您的家中存在较高浓度的有害气体");

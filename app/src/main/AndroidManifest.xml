@@ -52,7 +52,9 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+
             android:name=".FamilyMsgActivity"
+
             android:label="@string/app_name" >
         </activity>
         <activity

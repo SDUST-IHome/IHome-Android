@@ -5,20 +5,35 @@
     android:weightSum="4">
 
 
-
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="楼宇对讲"
-            android:textSize="20dp"
-            android:textOn="楼宇对讲已开启"
-            android:textOff="楼宇对讲未开启"
-            android:id="@+id/outdoor_switch" />
-
     <WebView
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/webView" />
+        android:layout_height="300dp"
+        android:id="@+id/webView"
+         />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:layout_margin="2dp"
+            android:text="接通"
+            android:id="@+id/outdoor_connect"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:layout_margin="2dp"
+            android:text="忽略/挂断"
+            android:id="@+id/outdoor_stop"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
 
 </LinearLayout>

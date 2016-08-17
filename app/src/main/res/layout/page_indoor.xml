@@ -14,7 +14,7 @@
         android:textSize="20dp"
         android:textOn="室内监控已开启"
         android:textOff="室内监控未开启"
-        android:id="@+id/outdoor_switch" />
+        android:id="@+id/indoor_switch" />
 
     <WebView
         android:layout_width="fill_parent"

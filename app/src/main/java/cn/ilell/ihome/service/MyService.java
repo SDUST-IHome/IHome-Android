@@ -23,7 +23,7 @@ public class MyService extends Service {
     protected String serverIP = "115.159.127.79";  //static final
     protected int serverPort = 5678;
     protected Socket serviceSocket;
-    protected DataOutputStream socketOut = null;
+    protected static DataOutputStream socketOut = null;
     protected DataInputStream socketIn = null;
     protected String recvMsg;
     protected String sendMsg;

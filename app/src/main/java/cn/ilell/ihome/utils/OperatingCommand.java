@@ -3,6 +3,9 @@ package cn.ilell.ihome.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.ilell.ihome.base.BaseData;
+import cn.ilell.ihome.service.MsgService;
+
 /**
  * Created by lhc35 on 2016/5/23.
  */
@@ -54,7 +57,10 @@ public class OperatingCommand {
     }
 
     public String dealCommand(String comnd) {
-        if (!comMap.containsKey(comnd))
+        //将识别后的文字发送给服务器分析执行
+        MsgService.sendMsg("1/12/"+ BaseData.home_id+"/"+comnd);
+        return comnd;
+        /*if (!comMap.containsKey(comnd))
             return "无法识别的操作指令";
         String result,comvalue;
         comvalue = comMap.get(comnd);
@@ -63,6 +69,6 @@ public class OperatingCommand {
         params.put("deviceID", com[0]);
         params.put("deviceState",com[1]);
         result = HttpXmlClient.post("http://115.159.127.79/ihome/backdeal/SetState.php", params);
-        return result;
+        return result;*/
     }
 }

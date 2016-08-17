@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 
 import cn.ilell.ihome.FamilyMsgActivity;
 import cn.ilell.ihome.MonitorActivity;
+import cn.ilell.ihome.base.BaseData;
 
 /**
  * Created by lhc35 on 2016/4/16.
@@ -53,7 +54,7 @@ public class MsgService extends MyService {
 
             socketIn = new DataInputStream(serviceSocket.getInputStream());
             socketOut = new DataOutputStream(serviceSocket.getOutputStream());
-            sendMsg("1/0/Phone");
+            sendMsg("1/0/"+ BaseData.home_id);
             Thread mThread = new Thread(mRunable);
             mThread.start();
         } catch (UnknownHostException e) {
@@ -63,14 +64,13 @@ public class MsgService extends MyService {
         }
     }
 
-    public void sendMsg(String str) {
+    public static void sendMsg(String str) {
         try {
             socketOut.write(str.getBytes());
             socketOut.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private Runnable mRunable = new Runnable() {
@@ -78,9 +78,9 @@ public class MsgService extends MyService {
         public void run() {
             while (true) {
                 try {
-                        recvMsg = socketIn.readUTF();
-                        mHandler.sendMessage(mHandler.obtainMessage());
-                    } catch (IOException e) {
+                    recvMsg = socketIn.readUTF();
+                    mHandler.sendMessage(mHandler.obtainMessage());
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

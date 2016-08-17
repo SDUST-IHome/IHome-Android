@@ -23,7 +23,7 @@ import java.net.UnknownHostException;
 public class AudioClient {
 
 	private String ser_local_ip = "192.168.0.80";  //static final
-	private String ser_remote_ip = "192.168.0.80";  //static final
+	private String ser_remote_ip = "115.159.23.237";  //static final
 	private String ser_ip = "115.159.23.237";  //static final
 	private DatagramSocket socket = null;
 	private boolean running;
@@ -71,7 +71,7 @@ public class AudioClient {
 
 	public int autoStart() {
 		currentID = 0;
-		ser_ip = ser_local_ip;
+		//ser_ip = ser_local_ip;
 		startAudioClient();
 		try {
 			Thread.sleep(500);

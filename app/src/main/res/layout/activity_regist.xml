@@ -28,26 +28,80 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <EditText
-                    android:id="@+id/regist_text_user"
+                    android:id="@+id/regist_text_homeid"
                     android:background="@color/color_btn_white"
-                    android:drawableLeft="@drawable/ic_regedit_user"
+                    android:drawableLeft="@drawable/ic_regedit_homeid"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="7px"
                     android:singleLine="true"
-                    android:hint="用户名"
+                    android:hint="HomeID"
                     android:textColor="#000"/>
+
+                <EditText
+                    android:id="@+id/regist_text_homepwd"
+                    android:background="@color/color_btn_white"
+                    android:drawableLeft="@drawable/ic_regedit_homeidpwd"
+                    android:layout_marginTop="7px"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:singleLine="true"
+                    android:hint="家庭密码"
+                    android:textColor="#000"/>
+
+                <EditText
+                    android:id="@+id/regist_text_mail"
+                    android:background="@color/color_btn_white"
+                    android:drawableLeft="@drawable/ic_regedit_mail"
+                    android:layout_marginTop="7px"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:singleLine="true"
+                    android:hint="邮箱"
+                    android:textColor="#000"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="7px"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="3">
+
+                    <EditText
+                        android:id="@+id/regist_text_verify"
+                        android:background="@color/color_btn_white"
+                        android:drawableLeft="@drawable/ic_regedit_verify"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="match_parent"
+                        android:singleLine="true"
+                        android:inputType="textPassword"
+                        android:hint="验证码"
+                        android:textColor="#000"/>
+                    <Button
+                        android:id="@+id/regist_btn_verify"
+                        android:background="@drawable/selector_ok_button"
+                        android:textColor="@color/color_btn_text"
+                        android:textSize="16dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:text="获取验证码"
+                        />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/regist_text_name"
                     android:background="@color/color_btn_white"
-                    android:drawableLeft="@drawable/ic_regedit_name"
+                    android:drawableLeft="@drawable/ic_regedit_user"
                     android:layout_marginTop="7px"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:singleLine="true"
+                    android:inputType="textPassword"
                     android:hint="姓名"
                     android:textColor="#000"/>
+
                 <EditText
                     android:id="@+id/regist_text_phone"
                     android:background="@color/color_btn_white"
@@ -56,8 +110,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:singleLine="true"
-                    android:hint="手机号"
-                    android:textColor="#000"/>
+                    android:inputType="textPassword"
+                    android:hint="手机号（选填）"
+                    android:textColor="#000"
+                    android:layout_gravity="center_horizontal" />
+
                 <EditText
                     android:id="@+id/regist_text_pwd"
                     android:background="@color/color_btn_white"
@@ -67,8 +124,10 @@
                     android:layout_height="50dp"
                     android:singleLine="true"
                     android:inputType="textPassword"
-                    android:hint="密码"
-                    android:textColor="#000"/>
+                    android:hint="密码(6~20)"
+                    android:textColor="#000"
+                    android:layout_gravity="center_horizontal" />
+
                 <EditText
                     android:id="@+id/regist_text_pwdenter"
                     android:background="@color/color_btn_white"
@@ -79,7 +138,9 @@
                     android:singleLine="true"
                     android:inputType="textPassword"
                     android:hint="确认密码"
-                    android:textColor="#000"/>
+                    android:textColor="#000"
+                    android:layout_gravity="center_horizontal" />
+
                 <Button
                     android:id="@+id/regist_btn_regist"
                     android:background="@drawable/selector_ok_button"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -29,7 +30,9 @@ import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.SynthesizerListener;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.iflytek.sunflower.FlowerCollector;
@@ -77,14 +80,19 @@ import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
  */
 public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
-    private String voiceResult = "";
+
     //语音识别部分
     private static String TAG = ControlActivity.class.getSimpleName();
+    //语音听写结果
+    private String voiceResult = "";
     // 语音听写UI
     private RecognizerDialog mIatDialog;
     // 用HashMap存储听写结果
     private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
     int ret = 0; // 函数调用返回值
+
+    // 语音合成对象
+    private SpeechSynthesizer mTts;
     //语音识别部分
 
     private OperatingCommand operatingCommand;  //语音操作指令处理
@@ -149,6 +157,10 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                                     if (null != finalResult) {//AI回复结果
                                         JSONObject json = new JSONObject(finalResult);
                                         finalResult = json.getString("text");
+
+                                        FlowerCollector.onEvent(BaseActivity.this, "tts_play");
+                                        mTts.startSpeaking(finalResult, mTtsListener);
+
                                         //SnackbarUtil.show(findViewById(R.id.main_floatingactionbutton), finalResult, 0);
                                         final String finalResult1 = finalResult;
                                         runOnUiThread(new Runnable() {
@@ -275,6 +287,40 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         //Toast.makeText(BaseActivity.this, BaseData.account_name, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * 合成回调监听。
+     */
+    private SynthesizerListener mTtsListener = new SynthesizerListener() {
+
+        @Override
+        public void onSpeakBegin() {
+        }
+
+        @Override
+        public void onSpeakPaused() {
+        }
+
+        @Override
+        public void onSpeakResumed() {
+        }
+
+        @Override
+        public void onCompleted(SpeechError error) {
+        }
+
+        @Override
+        public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {
+        }
+
+        @Override
+        public void onBufferProgress(int arg0, int arg1, int arg2, String arg3) {
+        }
+
+        @Override
+        public void onSpeakProgress(int arg0, int arg1, int arg2) {
+        }
+    };
+
     protected void bindMsgService() {
         //绑定Service
         Intent intent = new Intent();
@@ -325,6 +371,7 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
         //语音识别部分
         SpeechUtility.createUtility(BaseActivity.this, "appid=573f022f");
         mIatDialog = new RecognizerDialog(BaseActivity.this, mInitListener);
+        mTts = SpeechSynthesizer.createSynthesizer(BaseActivity.this, mInitListener);
     }
 
     /**
@@ -409,6 +456,7 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     public void onFloatingactionButtonClick(View v) {
+        mTts.stopSpeaking();
         // 移动数据分析，收集开始听写事件
         FlowerCollector.onEvent(BaseActivity.this, "iat_recognize");
         mIatResults.clear();

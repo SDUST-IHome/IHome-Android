@@ -11,6 +11,14 @@
         android:id="@+id/webView"
          />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="有人来啦"
+        android:textSize="20dp"
+        android:id="@+id/outdoor_text_state"
+        android:layout_gravity="center_horizontal" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -18,20 +26,26 @@
         >
 
         <Button
+            android:background="@drawable/selector_topimg_button"
+            android:drawableTop="@drawable/ic_doorphone_start"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:layout_margin="2dp"
             android:text="接通"
+            android:textColor="#000"
             android:id="@+id/outdoor_connect"
             android:layout_gravity="center_vertical" />
 
         <Button
+            android:background="@drawable/selector_topimg_button"
+            android:drawableTop="@drawable/ic_doorphone_stop"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:layout_margin="2dp"
             android:text="忽略/挂断"
+            android:textColor="#000"
             android:id="@+id/outdoor_stop"
             android:layout_gravity="center_vertical" />
     </LinearLayout>

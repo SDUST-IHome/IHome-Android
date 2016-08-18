@@ -53,6 +53,7 @@ import cn.ilell.ihome.RegistActivity;
 import cn.ilell.ihome.ScheduleActivity;
 import cn.ilell.ihome.StateActivity;
 import cn.ilell.ihome.adapter.MyViewPagerAdapter;
+import cn.ilell.ihome.fragment.OutdoorFragment;
 import cn.ilell.ihome.service.MsgService;
 import cn.ilell.ihome.service.OnProgressListener;
 import cn.ilell.ihome.utils.JsonParser;
@@ -119,9 +120,16 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                 @Override
                 public void onProgress(String recvMsg) {
                     SnackbarUtil.show(findViewById(R.id.main_floatingactionbutton), recvMsg, 0);
-                    if (recvMsg.equals("0/4/6") && mClass.equals(MonitorActivity.class)) {
-                        //关闭楼宇对讲
-                        finish();
+                    if (mClass.equals(MonitorActivity.class)) {
+                        if (recvMsg.equals("0/4/6"))//关闭楼宇对讲
+                            finish();
+                        else {
+                            String[] cmd = recvMsg.split("/");
+                            if (cmd[0].equals("1") && cmd[1].equals("3")) {
+                                if (OutdoorFragment.text_state!=null)
+                                    OutdoorFragment.text_state.setText(cmd[2]);
+                            }
+                        }
                     }
                     /*TextView textView = (TextView) findViewById(R.id.main_textView);
                     textView.setText(recvMsg);*/

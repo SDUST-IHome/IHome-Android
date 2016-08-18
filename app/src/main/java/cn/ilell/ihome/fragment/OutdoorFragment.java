@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class OutdoorFragment extends BaseFragment{
 
     private Button btn_connect = null;
     private Button btn_stop = null;
+    public static TextView text_state = null;
 
     public static AudioClient audioClient = null;
 
@@ -63,6 +65,7 @@ public class OutdoorFragment extends BaseFragment{
         //text = (TextView) mView.findViewById(R.id.outdoor_textView);
         btn_connect = (Button) mView.findViewById(R.id.outdoor_connect);
         btn_stop = (Button) mView.findViewById(R.id.outdoor_stop);
+        text_state = (TextView) mView.findViewById(R.id.outdoor_text_state);
     }
 
     private void setListener() {

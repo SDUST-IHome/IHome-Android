@@ -109,6 +109,9 @@ public class MsgService extends MyService {
                     else if (data[2].equals("3")) { //闯入报警
                         showCzNotify("有人闯入","发现有人非法闯入，点击查看室内监控");
                     }
+                    else if (data[2].equals("4")) { //设备操作错误
+                        showIntentActivityNotify("设备操作错误",data[2], MonitorActivity.class);
+                    }
                     else if (data[2].equals("5")) { //触摸通知
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("Ring",true);
@@ -117,20 +120,15 @@ public class MsgService extends MyService {
                         it.putExtras(bundle);
                         startActivity(it);
                     }
-                    else {
-                        //showCzNotify("12123","传感器检测到您的家中存在较高浓度的有害气体");
-                        showIntentActivityNotify("设备操作错误",data[2], MonitorActivity.class);
-                    }
-
                 }
             }
             else if (data[0].equals("1")) {   //用户级消息
                 if (data[1].equals("2")) {  //家庭留言更新
                     showIntentActivityNotify("您有新的家庭留言",data[2], FamilyMsgActivity.class);
                 }
-                else if (data[1].equals("3")) {  //人员到访通知
+                /*else if (data[1].equals("3")) {  //人员到访通知
                     showIntentActivityNotify("有客人到访",data[2], MonitorActivity.class);
-                }
+                }*/
             }
             onProgressListener.onProgress(recvMsg);    //将消息传到前端
         };

@@ -1,16 +1,23 @@
 package cn.ilell.ihome;
 
+import android.content.ComponentName;
 import android.os.Bundle;
+import android.os.IBinder;
 
 import java.util.ArrayList;
 
 import cn.ilell.ihome.base.BaseActivity;
 import cn.ilell.ihome.fragment.IndoorFragment;
 import cn.ilell.ihome.fragment.OutdoorFragment;
+import cn.ilell.ihome.service.MsgService;
+import cn.ilell.ihome.service.OnProgressListener;
+import cn.ilell.ihome.utils.SnackbarUtil;
 
 public class MonitorActivity extends BaseActivity {
     //楼宇对讲是否响铃
     public boolean ring = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

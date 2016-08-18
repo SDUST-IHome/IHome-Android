@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,9 +34,16 @@ import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.iflytek.sunflower.FlowerCollector;
 
+import org.apache.http.HttpConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -69,6 +77,7 @@ import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
  */
 public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
+    private String voiceResult = "";
     //语音识别部分
     private static String TAG = ControlActivity.class.getSimpleName();
     // 语音听写UI
@@ -131,6 +140,59 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                             }
                         }
                     }
+                    String[] msg = recvMsg.split("/");
+                    if(msg[0].equals("1") && msg[1].equals("1") && msg[2].equals("指令未识别") ){
+                        new Thread(new Runnable() {
+                            public void run() {
+                                try {
+                                    String finalResult = AIRequest(URLEncoder.encode(voiceResult, "UTF-8"));
+                                    if (null != finalResult) {//AI回复结果
+                                        JSONObject json = new JSONObject(finalResult);
+                                        finalResult = json.getString("text");
+                                        //SnackbarUtil.show(findViewById(R.id.main_floatingactionbutton), finalResult, 0);
+                                        final String finalResult1 = finalResult;
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(BaseActivity.this, finalResult1, Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            //获取AI的回复
+                            public String AIRequest(final String content) {
+                                String result = null;
+                                String httpUrl = "http://apis.baidu.com/turing/turing/turing?key=f88d75ec75a045da827d0b34f8abbe5b&info=";
+                                String httpArg = "&userid=eb2edb736";
+                                httpUrl = httpUrl  + content + httpArg;
+                                BufferedReader reader = null;
+                                StringBuffer sbf = new StringBuffer();
+                                try {
+                                    URL url = new URL(httpUrl);
+                                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                                    connection.setRequestMethod("GET");
+                                    connection.setRequestProperty("apikey", "92e10d91b8c56e3698f2b2efb6f2a4c0");
+                                    connection.connect();
+                                    InputStream is = connection.getInputStream();
+                                    reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                                    String strRead = null;
+                                    while ((strRead = reader.readLine()) != null) {
+                                        sbf.append(strRead);
+                                        sbf.append("\r\n");
+                                    }
+                                    reader.close();
+                                    result = sbf.toString();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                return result;
+                            }
+                        }).start();
+                    }
                     /*TextView textView = (TextView) findViewById(R.id.main_textView);
                     textView.setText(recvMsg);*/
                 }
@@ -170,7 +232,10 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             resultBuffer.append(mIatResults.get(key));
         }
 
-        Toast.makeText(BaseActivity.this, operatingCommand.dealCommand(resultBuffer.toString()), Toast.LENGTH_LONG ).show();
+        //语音结果
+        voiceResult = resultBuffer.toString();
+        operatingCommand.dealCommand(voiceResult);
+        //Toast.makeText(BaseActivity.this, operatingCommand.dealCommand(voiceResult), Toast.LENGTH_LONG).show();
     }
 
     /**

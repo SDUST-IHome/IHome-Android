@@ -125,6 +125,8 @@ public class MsgService extends MyService {
             else if (data[0].equals("1")) {   //用户级消息
                 if (data[1].equals("2")) {  //家庭留言更新
                     showIntentActivityNotify("您有新的家庭留言",data[2], FamilyMsgActivity.class);
+                }else if(data[1].equals("1")){//语音识别结果
+
                 }
                 /*else if (data[1].equals("3")) {  //人员到访通知
                     showIntentActivityNotify("有客人到访",data[2], MonitorActivity.class);

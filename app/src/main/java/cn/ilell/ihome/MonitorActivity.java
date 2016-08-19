@@ -69,7 +69,8 @@ public class MonitorActivity extends BaseActivity {
     @Override
     public void onDestroy() {
         unbindService(conn);
-        OutdoorFragment.audioClient.stop();
+        if (OutdoorFragment.audioClient != null)
+            OutdoorFragment.audioClient.stop();
         if (OutdoorFragment.mMediaPlayer != null)
             OutdoorFragment.mMediaPlayer.stop();
         super.onDestroy();

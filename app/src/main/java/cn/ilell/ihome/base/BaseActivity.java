@@ -138,8 +138,11 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                 public void onProgress(String recvMsg) {
                     SnackbarUtil.show(findViewById(R.id.main_floatingactionbutton), recvMsg, 0);
                     if (mClass.equals(MonitorActivity.class)) {
-                        if (recvMsg.equals("0/4/6"))//关闭楼宇对讲
-                            finish();
+                        if (recvMsg.equals("0/4/6")){
+                            if (OutdoorFragment.mMediaPlayer != null && OutdoorFragment.mMediaPlayer.isPlaying())
+                                OutdoorFragment.mMediaPlayer.stop();
+                            //finish();
+                        }//关闭楼宇对讲
                         else {
                             String[] cmd = recvMsg.split("/");
                             if (cmd[0].equals("1") && cmd[1].equals("3")) {

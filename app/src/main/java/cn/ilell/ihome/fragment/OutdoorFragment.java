@@ -73,7 +73,9 @@ public class OutdoorFragment extends BaseFragment{
 
             @Override
             public void onClick(View v) {
-                web.loadUrl("http://115.159.127.79/ihome/backdeal/VideoForPhone.php");
+                if (mMediaPlayer != null && mMediaPlayer.isPlaying())
+                    mMediaPlayer.stop();
+                web.loadUrl("file:///android_asset/doorphone.html");
                 new Thread(){
                     public void run(){
                         int result = audioClient.autoStart();
@@ -86,7 +88,6 @@ public class OutdoorFragment extends BaseFragment{
                                 }
                             });
                         }
-
                     }
                 }.start();
             }
@@ -96,7 +97,8 @@ public class OutdoorFragment extends BaseFragment{
 
             @Override
             public void onClick(View v) {
-                mMediaPlayer.stop();
+                if (mMediaPlayer != null && mMediaPlayer.isPlaying())
+                    mMediaPlayer.stop();
                 web.loadUrl("about:blank");
                 audioClient.stop();
             }

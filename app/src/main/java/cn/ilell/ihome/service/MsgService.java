@@ -19,6 +19,7 @@ import java.net.UnknownHostException;
 
 import cn.ilell.ihome.FamilyMsgActivity;
 import cn.ilell.ihome.MonitorActivity;
+import cn.ilell.ihome.StateActivity;
 import cn.ilell.ihome.base.BaseData;
 
 /**
@@ -86,6 +87,7 @@ public class MsgService extends MyService {
                     mHandler.sendMessage(mHandler.obtainMessage());
                 } catch (IOException e) {
                     e.printStackTrace();
+
                 }
             }
         }
@@ -110,7 +112,7 @@ public class MsgService extends MyService {
                         showCzNotify("有人闯入","发现有人非法闯入，点击查看室内监控");
                     }
                     else if (data[2].equals("4")) { //设备操作错误
-                        showIntentActivityNotify("设备操作错误",data[2], MonitorActivity.class);
+                        showIntentActivityNotify("设备操作错误",data[2], StateActivity.class);
                     }
                     else if (data[2].equals("5")) { //触摸通知
                         Bundle bundle = new Bundle();

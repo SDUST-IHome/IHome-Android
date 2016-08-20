@@ -14,10 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.ilell.ihome.R;
 import cn.ilell.ihome.base.BaseFragment;
 import cn.ilell.ihome.io.AudioClient;
+import cn.ilell.ihome.utils.HttpXmlClient;
 
 /**
  * Created by Monkey on 2015/6/29.
@@ -25,6 +28,7 @@ import cn.ilell.ihome.io.AudioClient;
 public class OutdoorFragment extends BaseFragment{
 
     private Button btn_connect = null;
+    private Button btn_opendoor = null;
     private Button btn_stop = null;
     public static TextView text_state = null;
 
@@ -47,7 +51,10 @@ public class OutdoorFragment extends BaseFragment{
         audioClient = new AudioClient();
 
         Bundle bundle = getActivity().getIntent().getExtras();
-        boolean ring = bundle.getBoolean("Ring",false);
+
+        boolean ring = false;
+        if (bundle != null)
+            ring = bundle.getBoolean("Ring",false);
         if (ring)   startAlarm();
     }
 
@@ -64,6 +71,7 @@ public class OutdoorFragment extends BaseFragment{
         initView();
         //text = (TextView) mView.findViewById(R.id.outdoor_textView);
         btn_connect = (Button) mView.findViewById(R.id.outdoor_connect);
+        btn_opendoor = (Button) mView.findViewById(R.id.outdoor_opendoor);
         btn_stop = (Button) mView.findViewById(R.id.outdoor_stop);
         text_state = (TextView) mView.findViewById(R.id.outdoor_text_state);
     }
@@ -90,6 +98,16 @@ public class OutdoorFragment extends BaseFragment{
                         }
                     }
                 }.start();
+            }
+        });
+
+        btn_opendoor.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("deviceID", "0021");
+                params.put("deviceState","0");
+                String result = HttpXmlClient.post("http://115.159.127.79/ihome/backdeal/SetState.php", params);
             }
         });
 

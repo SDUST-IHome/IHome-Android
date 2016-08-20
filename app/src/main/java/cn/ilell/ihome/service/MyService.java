@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -80,7 +81,7 @@ public class MyService extends Service {
         //设置通知  消息  图标
         mNotification.icon = R.mipmap.ic_launcher;
         //在通知栏上点击此通知后自动清除此通知
-        mNotification.flags = Notification.FLAG_ONGOING_EVENT;//FLAG_ONGOING_EVENT 在顶部常驻，可以调用下面的清除方法去除  FLAG_AUTO_CANCEL  点击和清理可以去调
+        mNotification.flags = Notification.FLAG_AUTO_CANCEL;//FLAG_ONGOING_EVENT 在顶部常驻，可以调用下面的清除方法去除  FLAG_AUTO_CANCEL  点击和清理可以去调
         //设置显示通知时的默认的发声、震动、Light效果
         mNotification.defaults = Notification.DEFAULT_VIBRATE;
         //设置发出消息的内容

@@ -1,8 +1,14 @@
 package cn.ilell.ihome;
 
 import android.content.ComponentName;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.iflytek.sunflower.task.e;
 
 import java.util.ArrayList;
 
@@ -17,14 +23,14 @@ public class MonitorActivity extends BaseActivity {
     //楼宇对讲是否响铃
     public boolean ring = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Bundle bundle = this.getIntent().getExtras();
-        ring = bundle.getBoolean("Ring",false);
+        if (bundle != null)
+            ring = bundle.getBoolean("Ring", false);
 
         // 初始化各种控件
         initViews();
@@ -41,7 +47,6 @@ public class MonitorActivity extends BaseActivity {
         mContext = this;
         mClass = MonitorActivity.class;
 
-        //mFloatingActionButton.setVisibility(View.INVISIBLE);
     }
 
     private void initData() {
@@ -54,7 +59,7 @@ public class MonitorActivity extends BaseActivity {
 
         Bundle outdoorBundle = new Bundle();
         outdoorBundle.putInt("flag", 0);
-        outdoorBundle.putBoolean("Ring",ring);
+        outdoorBundle.putBoolean("Ring", ring);
         OutdoorFragment outdoorFragment = new OutdoorFragment();
         outdoorFragment.setArguments(outdoorBundle);
         mFragments.add(0, outdoorFragment);
@@ -66,6 +71,7 @@ public class MonitorActivity extends BaseActivity {
         mFragments.add(1, indoorFragment);
 
     }
+
     @Override
     public void onDestroy() {
         unbindService(conn);

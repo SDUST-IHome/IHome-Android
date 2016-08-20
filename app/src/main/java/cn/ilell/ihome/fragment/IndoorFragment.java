@@ -55,7 +55,7 @@ public class IndoorFragment extends BaseFragment{
                                          boolean isChecked) {
                 // TODO Auto-generated method stub
                 if (isChecked) {//打开
-                    web.loadUrl("http://115.159.127.79/ihome/backdeal/IndoorVideoForPhone.php");
+                    web.loadUrl("file:///android_asset/indoormonitor.html");
                 } else {// 关闭
                     web.loadUrl("about:blank");
                 }

@@ -22,7 +22,7 @@ import java.net.UnknownHostException;
 ({ "NewApi", "HandlerLeak" })
 public class AudioClient {
 
-	private String ser_local_ip = "192.168.0.81";  //static final
+	private String ser_local_ip = "192.168.0.82";  //static final
 	private String ser_remote_ip = "115.159.23.237";  //static final
 	private String ser_ip = "115.159.23.237";  //static final
 	private DatagramSocket socket = null;
@@ -63,13 +63,11 @@ public class AudioClient {
 			 .build());
 
 
-		createAudioRecord();
-		createAudioTrack();
-
-
 	}
 
 	public int autoStart() {
+		createAudioRecord();
+		createAudioTrack();
 		currentID = 0;
 		//ser_ip = ser_local_ip;
 		startAudioClient();
@@ -146,6 +144,8 @@ public class AudioClient {
 					}
 				}
 				try {
+					if (audioRecord.getRecordingState() == audioRecord.RECORDSTATE_STOPPED)
+						return; //录音停止，退出线程
 					result = audioRecord.read(buf_audio, 0, Package.BUFLEN); //read from audio
 				} catch (Error error) {
 					error.printStackTrace();
@@ -205,6 +205,8 @@ public class AudioClient {
 					if (pack.getId() > currentID) {
 						currentID = pack.getId();
 						try {
+							if (audioTrack.getPlayState() == audioTrack.PLAYSTATE_STOPPED)
+								return;	//播放停止，退出线程
 							audioTrack.write(pack.getData(),0, Package.BUFLEN);
 						}catch (Error error) {
 							error.printStackTrace();

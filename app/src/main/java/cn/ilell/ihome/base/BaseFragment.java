@@ -47,6 +47,10 @@ public class BaseFragment extends Fragment implements
         //SnackbarUtil.show(mRecyclerView, getString(R.string.item_longclicked), 0);
     }
 
+    public void onPause() {
+        super.onPause();
+        web.loadUrl("about:blank");
+    }
     @Override
     public void onClick(View v) {
 

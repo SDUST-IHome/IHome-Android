@@ -22,6 +22,8 @@ import cn.ilell.ihome.MonitorActivity;
 import cn.ilell.ihome.StateActivity;
 import cn.ilell.ihome.base.BaseData;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by lhc35 on 2016/4/16.
  */
@@ -87,6 +89,17 @@ public class MsgService extends MyService {
                     mHandler.sendMessage(mHandler.obtainMessage());
                 } catch (IOException e) {
                     e.printStackTrace();
+                    try {
+                        sleep(1000);
+                        serviceSocket.close();
+                        socketIn.close();
+                        socketOut.close();
+                        connectServer();
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
 
                 }
             }

@@ -136,7 +136,7 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
             msgService.setOnProgressListener(new OnProgressListener() {
                 @Override
                 public void onProgress(String recvMsg) {
-                    SnackbarUtil.show(findViewById(R.id.main_floatingactionbutton), recvMsg, 0);
+                    //SnackbarUtil.show(findViewById(R.id.main_floatingactionbutton), recvMsg, 0);
                     if (mClass.equals(MonitorActivity.class)) {
                         if (recvMsg.equals("0/4/6")){
                             if (OutdoorFragment.mMediaPlayer != null && OutdoorFragment.mMediaPlayer.isPlaying())
@@ -207,6 +207,9 @@ public class BaseActivity extends AppCompatActivity implements ViewPager.OnPageC
                                 return result;
                             }
                         }).start();
+                    }
+                    else if(msg[0].equals("1") && msg[1].equals("1")) {
+                        Toast.makeText(BaseActivity.this, msg[2], Toast.LENGTH_SHORT).show();
                     }
                     /*TextView textView = (TextView) findViewById(R.id.main_textView);
                     textView.setText(recvMsg);*/

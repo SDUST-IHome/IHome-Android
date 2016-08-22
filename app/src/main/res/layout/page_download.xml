@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/download_editText"
             android:textColor="#000"
-            android:hint="http、ftp下载链接"
+            android:text="http://115.159.23.237/lhc/iot.avi"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
